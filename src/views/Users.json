@@ -1,0 +1,16 @@
+{
+    "obj": [ 
+        {
+            "account": "root",
+            "type": "debit",
+            "incomes": [],
+            "expenses": []
+        },
+        {
+            "account": "root2",
+            "type": "credit",
+            "incomes": [],
+            "expenses": []
+        }
+    ]
+}
