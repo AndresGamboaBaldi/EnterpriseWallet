@@ -1,0 +1,14 @@
+.cred{
+    color:black;
+   /*-webkit-text-stroke: 0.4px #1c0d02;*/
+    border-color: #1c0d02;
+    background-color: whitesmoke;
+    border-style: double;
+    border-radius: 10px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    text-align: center;    
+}
