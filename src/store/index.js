@@ -28,7 +28,7 @@ export default new Vuex.Store({
     },
     deleteExpense({ commit }, expenseToDelete) {
       commit("mutateDeleteExpense", expenseToDelete);
-    }
+    },
     addIncomeCategory({ commit }, category) {
       commit("mutateIncomeList", category);
     },
@@ -71,7 +71,7 @@ export default new Vuex.Store({
       if (this.expense !== null) {
         state.obj.expenses.splice(indexOfItem, 1);
       }
-    }
+    },
     mutateIncomeList(state, category) {
       if (category.name != "") {
         var rep = false;
@@ -115,7 +115,7 @@ export default new Vuex.Store({
       });
     },
     mutateDeleteIncome(state, incomeToDelete) {
-     // var list = state.obj.incomes;
+      // var list = state.obj.incomes;
       var index;
       state.obj.incomes.forEach(income => {
         if (income.name === incomeToDelete) {
@@ -133,7 +133,7 @@ export default new Vuex.Store({
     },
     getExpenseList(state) {
       return state.obj.expenses;
-    }
+    },
     getCategoryList(state) {
       return state.categories;
     },
