@@ -2,18 +2,26 @@
   <div class="home">
     <HelloWorld msg="Welcome to My Enterprise Wallet " />
     <br />
-    <input v-model="account" placeholder="User name" />
+    <input v-model="account" placeholder="Choose Account" />
     <br />
     <br />
-    <button @click="validateContext()">LOGGIN</button>
+    <button @click="validateContext()">CHOOSE</button>
+    <br />
+    <br />
+    <div :key="index" v-for="(account, index) in accounts">
+      <ul>
+        <li>
+          {{ account.account }}
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import HelloWorld from "@/components/HelloWorld.vue";
-import * as data from "./Users.json";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "Home",
@@ -22,22 +30,23 @@ export default {
   },
   data() {
     return {
-      account: "",
-      list: data.obj
+      account: ""
     };
   },
+  computed: {
+    ...mapGetters(["getAccounts"]),
+    accounts() {
+      return this.getAccounts;
+    }
+  },
   methods: {
+    ...mapActions(["chooseAccount"]),
     validateContext() {
-      this.list.find(element => element.account === this.account)
-        ? this.submitUser()
+      this.accounts.find(element => element.account === this.account)
+        ? this.selectedAccount
         : alert("The user name doesn't exist");
     },
-    ...mapActions(["setUser"]),
-    submitUser() {
-      const allFromUser = this.list.find(item => item.account === this.account);
-      console.log(allFromUser);
-      this.setUser(allFromUser);
-    }
+    selectedAccount() {}
   }
 };
 </script>

@@ -5,7 +5,15 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    obj: {
+    accounts: [
+      {
+        account: "root",
+        type: "debit",
+        incomes: [],
+        expenses: []
+      }
+    ],
+    selectAccount: {
       account: "",
       type: "",
       incomes: [],
@@ -13,21 +21,27 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    setUser({ commit }, currentUser) {
-      commit("mutateUser", currentUser);
+    addAccount({ commit }, newAccount) {
+      commit("mutateAccounts", newAccount);
+    },
+    chooseAccount({ commit }, newSeletedAccount) {
+      commit("mutateSelectAccount", newSeletedAccount);
     }
   },
   mutations: {
-    mutateUser(state, currentUser) {
-      state.obj.account = currentUser.account;
-      state.obj.type = currentUser.type;
-      state.obj.incomes = currentUser.incomes;
-      state.expenses = currentUser.expenses;
+    mutateAccounts(state, newAccount) {
+      state.accounts.push(newAccount);
+    },
+    mutateSelectAccount(state, newSeletedAccount) {
+      state.selectAccount.account = newSeletedAccount.account;
+      state.selectAccount.type = newSeletedAccount.type;
+      state.selectAccount.incomes = newSeletedAccount.incomes;
+      state.selectAccount.expenses = newSeletedAccount.expenses;
     }
   },
   getters: {
-    getUser(state) {
-      return state.obj;
+    getAccounts(state) {
+      return state.accounts;
     }
   },
   modules: {}

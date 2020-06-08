@@ -2,6 +2,10 @@
   <div class="container">
     <h1>Welcome to your WALLET --- {{ obj.account }}</h1>
     <li>{{ obj.type }}</li>
+    <br />
+    <br />
+    <label>Change Name of Account : </label>
+    <input v-model="account" placeholder="Choose Account" />
   </div>
 </template>
 
@@ -15,6 +19,7 @@ export default {
     obj() {
       return this.getUser;
     }
-  }
+  },
+  methods: {}
 };
 </script>
