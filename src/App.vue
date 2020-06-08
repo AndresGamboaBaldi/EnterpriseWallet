@@ -1,9 +1,10 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Loggin</router-link> |
-      <router-link to="/register">Register</router-link> |
-      <router-link to="/wallet">Wallet</router-link>
+      <router-link to="/">Loggin </router-link> |
+      <router-link to="/register">Register </router-link> |
+      <router-link to="/wallet">Wallet </router-link>
+      <router-link to="/expenses">Expenses </router-link>
     </div>
     <router-view />
   </div>
