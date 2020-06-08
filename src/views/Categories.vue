@@ -40,7 +40,7 @@ export default {
   data() {
     return {
       NewIncome: "",
-      NewExpense: "",
+      NewExpense: ""
     };
   },
 
@@ -49,7 +49,7 @@ export default {
     // getList,
     categories() {
       return this.getCategoryList;
-    },
+    }
   },
 
   methods: {
@@ -62,8 +62,8 @@ export default {
     submitExpenseCat() {
       this.addExpenseCategory({ name: this.NewExpense });
       this.NewExpense = "";
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped>
