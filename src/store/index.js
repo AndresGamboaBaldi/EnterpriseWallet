@@ -13,7 +13,7 @@ export default new Vuex.Store({
     },
     categories: {
       income: [{ name: "Transaction" }, { name: "Other" }],
-      expense: [{ name: "Transaction" }, { name: "Other" }],
+      expense: [{ name: "Transaction" }, { name: "Other" }]
     }
   },
   actions: {
@@ -25,6 +25,16 @@ export default new Vuex.Store({
     },
     addExpenseCategory({ commit }, category) {
       commit("mutateExpenseList", category);
+    },
+    //Income
+    addIncome({ commit }, newIncome) {
+      commit("mutateAddIncome", newIncome);
+    },
+    updateIncome({ commit }, updatedIncome) {
+      commit("mutateUpdateIncome", updatedIncome);
+    },
+    deleteIncome({ commit }, incomeToDelete) {
+      commit("mutateDeleteIncome", incomeToDelete);
     }
   },
   mutations: {
@@ -59,6 +69,34 @@ export default new Vuex.Store({
           state.categories.expense.push(category);
         }
       }
+    },
+    //Income
+    mutateAddIncome(state, newIncome) {
+      state.obj.incomes.push(newIncome);
+    },
+    mutateUpdateIncome(state, updatedIncome) {
+      //var list = state.obj.incomes;
+      var index;
+      state.obj.incomes.forEach(income => {
+        if (income.name === updatedIncome.name) {
+          index = state.obj.incomes.indexOf(income);
+          if (index > -1) {
+            state.obj.incomes.splice(index, 1, updatedIncome);
+          }
+        }
+      });
+    },
+    mutateDeleteIncome(state, incomeToDelete) {
+     // var list = state.obj.incomes;
+      var index;
+      state.obj.incomes.forEach(income => {
+        if (income.name === incomeToDelete) {
+          index = state.obj.incomes.indexOf(income);
+          if (index > -1) {
+            state.obj.incomes.splice(index, 1);
+          }
+        }
+      });
     }
   },
   getters: {
@@ -67,6 +105,9 @@ export default new Vuex.Store({
     },
     getCategoryList(state) {
       return state.categories;
+    },
+    getIncomeList(state) {
+      return state.obj.incomes;
     }
   },
   modules: {}

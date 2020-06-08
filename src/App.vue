@@ -5,6 +5,7 @@
       <router-link to="/register">Register</router-link> |
       <router-link to="/wallet">Wallet</router-link> |
       <router-link to="/Categories">Categories</router-link>
+      <router-link to="/Income"> Incomes</router-link>
     </div>
     <br />
     <router-view />
