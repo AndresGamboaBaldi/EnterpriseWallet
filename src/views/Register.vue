@@ -33,7 +33,7 @@ export default {
     validateContext() {
       this.newAccount === "" || this.newType === ""
         ? alert("Must put a User Name or Type")
-        : this.submitAccount;
+        : this.submitAccount();
     },
     submitAccount() {
       this.addAccount({

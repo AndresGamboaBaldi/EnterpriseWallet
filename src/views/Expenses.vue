@@ -123,14 +123,14 @@ export default {
 </script>
 <style scoped>
 table {
-  border: 2px solid #194E70;
+  border: 2px solid #194e70;
   border-radius: 3px;
   background-color: rgb(224, 212, 212);
   margin-left: 300px;
 }
 th {
-  background-color: #194E70;
-  color: rgba(255,255,255,0.66);
+  background-color: #194e70;
+  color: rgba(255, 255, 255, 0.66);
   cursor: pointer;
   -webkit-user-select: none;
   -moz-user-select: none;

@@ -31,6 +31,12 @@ export default new Vuex.Store({
     chooseAccount({ commit }, newSeletedAccount) {
       commit("mutateSelectAccount", newSeletedAccount);
     },
+    updateAccout({ commit }, newNameAccount) {
+      commit("mutateUpdateAccount", newNameAccount);
+    },
+    deleteAccount({ commit }, nameAccount) {
+      commit("mutateDeleteAccount", nameAccount);
+    },
     addExpense({ commit }, newExpense) {
       commit("mutateAddExpense", newExpense);
     },
@@ -67,25 +73,38 @@ export default new Vuex.Store({
       state.selectAccount.incomes = newSeletedAccount.incomes;
       state.selectAccount.expenses = newSeletedAccount.expenses;
     },
+    mutateUpdateAccount(state, newNameAccount) {
+      state.selectAccount.account = newNameAccount;
+    },
+    mutateDeleteAccount(state, nameAccount) {
+      var indexOfItem;
+      state.accounts.find(item => item.account === nameAccount);
+      indexOfItem = state.accounts.indexOf(this.item);
+      if (this.item !== null) {
+        state.accounts.splice(indexOfItem, 1);
+      }
+    },
     mutateAddExpense(state, newExpense) {
-      state.accounts.expenses.push(newExpense);
+      state.selectAccount.expenses.push(newExpense);
     },
     mutateUpdateExpense(state, updatedExpense) {
       var indexOfItem;
-      state.accounts.expenses.find(
+      state.selectAccount.expenses.find(
         expense => expense.name === updatedExpense.name
       );
-      indexOfItem = state.accounts.expenses.indexOf(this.expense);
+      indexOfItem = state.selectAccount.expenses.indexOf(this.expense);
       if (this.expense !== null) {
-        state.accounts.expenses.splice(indexOfItem, 1, updatedExpense);
+        state.selectAccount.expenses.splice(indexOfItem, 1, updatedExpense);
       }
     },
     mutateDeleteExpense(state, expenseToDelete) {
       var indexOfItem;
-      state.accounts.expenses.find(expense => expense.name === expenseToDelete);
-      indexOfItem = state.accounts.expenses.indexOf(this.expense);
+      state.selectAccount.expenses.find(
+        expense => expense.name === expenseToDelete
+      );
+      indexOfItem = state.selectAccount.expenses.indexOf(this.expense);
       if (this.expense !== null) {
-        state.accounts.expenses.splice(indexOfItem, 1);
+        state.selectAccount.expenses.splice(indexOfItem, 1);
       }
     },
     mutateIncomeList(state, category) {
@@ -116,28 +135,28 @@ export default new Vuex.Store({
     },
     //Income
     mutateAddIncome(state, newIncome) {
-      state.accounts.incomes.push(newIncome);
+      state.selectAccount.incomes.push(newIncome);
     },
     mutateUpdateIncome(state, updatedIncome) {
-      //var list = state.accounts.incomes;
+      //var list = state.selectAccount.incomes;
       var index;
-      state.accounts.incomes.forEach(income => {
+      state.selectAccount.incomes.forEach(income => {
         if (income.name === updatedIncome.name) {
-          index = state.accounts.incomes.indexOf(income);
+          index = state.selectAccount.incomes.indexOf(income);
           if (index > -1) {
-            state.accounts.incomes.splice(index, 1, updatedIncome);
+            state.selectAccount.incomes.splice(index, 1, updatedIncome);
           }
         }
       });
     },
     mutateDeleteIncome(state, incomeToDelete) {
-      // var list = state.accounts.incomes;
+      // var list = state.selectAccount.incomes;
       var index;
-      state.accounts.incomes.forEach(income => {
+      state.selectAccount.incomes.forEach(income => {
         if (income.name === incomeToDelete) {
-          index = state.accounts.incomes.indexOf(income);
+          index = state.selectAccount.incomes.indexOf(income);
           if (index > -1) {
-            state.accounts.incomes.splice(index, 1);
+            state.selectAccount.incomes.splice(index, 1);
           }
         }
       });
@@ -147,17 +166,17 @@ export default new Vuex.Store({
     getAccounts(state) {
       return state.accounts;
     },
-    getUser(state) {
-      return state.accounts;
+    getAccount(state) {
+      return state.selectAccount;
     },
     getExpenseList(state) {
-      return state.accounts.expenses;
+      return state.selectAccount.expenses;
     },
     getCategoryList(state) {
       return state.categories;
     },
     getIncomeList(state) {
-      return state.accounts.incomes;
+      return state.selectAccount.incomes;
     }
   },
   modules: {}

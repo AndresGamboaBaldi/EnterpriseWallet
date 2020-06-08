@@ -43,10 +43,15 @@ export default {
     ...mapActions(["chooseAccount"]),
     validateContext() {
       this.accounts.find(element => element.account === this.account)
-        ? this.selectedAccount
+        ? this.selectedAccount()
         : alert("The user name doesn't exist");
     },
-    selectedAccount() {}
+    selectedAccount() {
+      const findAccount = this.accounts.find(
+        element => element.account === this.account
+      );
+      this.chooseAccount(findAccount);
+    }
   }
 };
 </script>
