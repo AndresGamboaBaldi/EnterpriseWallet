@@ -1,10 +1,13 @@
-# enterprisewallet
+## Enterprise Wallet
 
-------------------TASKS----------------------------
-Task0-> Incomes -> Vanessa Bustillos
-Task1-> Expenses -> Andres Gamboa
-Task2-> Incomes/Expenses Categories -> Diego Rosazza
-Task3-> Custom Accounts -> Mateo Lopez, Josue Cardozo
+#TASKS:
+
+- Task0 -> Incomes (Vanessa Bustillos)
+- Task1 -> Expenses (Andres Gamboa)
+- Task2 -> Incomes/Expenses Categories (Diego Rosazza)
+- Task3 -> Custom Accounts (Mateo Lopez, Josue Cardozo)
+- Task5 -> Fixes (Andres Gamboa)
+
 ## Project setup
 ```
 npm install
