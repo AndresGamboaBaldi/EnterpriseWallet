@@ -15,6 +15,7 @@
           category.name
         }}</option>
       </select>
+      <input v-model="accoutAux" placeholder="Account to transfer" />
       <br />
       <br />
       <label>Amount: </label>
@@ -68,7 +69,8 @@ export default {
     return {
       expenseName: "",
       expenseCategory: "",
-      expenseAmount: 0
+      expenseAmount: 0,
+      accoutAux: ""
     };
   },
   computed: {
