@@ -15,7 +15,16 @@
           category.name
         }}</option>
       </select>
-      <input v-model="accoutAux" placeholder="Account to transfer" />
+      <br />
+      <br />
+      <div v-if="expenseCategory === 'Transaction'">
+        <label>Account To Transfer: </label>
+        <select v-model="transferUser" placeholder="Account to transfer">
+          <option :key="index" v-for="(account, index) in accounts">
+            {{ account.account }}
+          </option>
+        </select>
+      </div>
       <br />
       <br />
       <label>Amount: </label>
@@ -27,6 +36,7 @@
       <span> {{ expenseDate }} </span>
       <br />
       <br />
+      <button @click="addNewTransfer">Add new Transfer</button>
       <button @click="addNewExpense">Add new Expense</button>
       <br />
       <br />
@@ -69,12 +79,12 @@ export default {
     return {
       expenseName: "",
       expenseCategory: "",
-      expenseAmount: 0,
-      accoutAux: ""
+      expenseAmount: 0
     };
   },
   computed: {
     ...mapGetters(["getCategoryList"]),
+    ...mapGetters(["getAccounts"]),
     ...mapGetters(["getExpenseList"]),
     expenseDate() {
       var date = new Date();
@@ -87,12 +97,33 @@ export default {
     },
     expenseList() {
       return this.getExpenseList;
+    },
+    accounts() {
+      return this.getAccounts;
     }
   },
   methods: {
     ...mapActions(["addExpense"]),
+    ...mapActions(["addIncome"]),
     ...mapActions(["updateExpense"]),
     ...mapActions(["deleteExpense"]),
+    ...mapActions(["addIncomeTransfered"]),
+    addNewTransfer(){
+      this.addExpense({
+        name: this.expenseName,
+        category: this.expenseCategory,
+        amount: this.expenseAmount,
+        date: this.expenseDate
+      });
+      this.addIncomeTransfered({
+        userAccount: this.transferUser,
+        name: this.expenseName,
+        category: this.expenseCategory,
+        amount: this.expenseAmount,
+        date: this.expenseDate
+      });
+      this.clearBoxes();
+    },
     addNewExpense() {
       this.addExpense({
         name: this.expenseName,
