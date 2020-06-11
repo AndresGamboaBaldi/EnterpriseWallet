@@ -56,6 +56,9 @@ export default new Vuex.Store({
     addIncome({ commit }, newIncome) {
       commit("mutateAddIncome", newIncome);
     },
+    addIncomeTransfered({ commit }, newTransferedIncome) {
+      commit("mutateAddTransferedIncome", newTransferedIncome);
+    },
     updateIncome({ commit }, updatedIncome) {
       commit("mutateUpdateIncome", updatedIncome);
     },
@@ -136,6 +139,19 @@ export default new Vuex.Store({
     //Income
     mutateAddIncome(state, newIncome) {
       state.selectAccount.incomes.push(newIncome);
+    },
+    mutateAddTransferedIncome(state, newTransferedIncome) {
+      const newIncome = {
+        name: newTransferedIncome.name,
+        category: newTransferedIncome.category,
+        amount: newTransferedIncome.amount,
+        date: newTransferedIncome.date
+      };
+      state.accounts.forEach(account => {
+        if (account.account === account.account) {
+          account.incomes.push(newIncome);
+        }
+      });
     },
     mutateUpdateIncome(state, updatedIncome) {
       //var list = state.selectAccount.incomes;
