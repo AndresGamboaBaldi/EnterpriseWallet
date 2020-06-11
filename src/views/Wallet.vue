@@ -2,7 +2,7 @@
   <div class="container">
     <h1>Welcome to your WALLET --- {{ obj.account }}</h1>
     <br />
-    <button @click="deleteAccount()">Delete Account</button>
+    <button @click="viewdeleteAccount()">Delete Account</button>
     <br />
     <br />
     <input v-model="account" placeholder="obj.account" />
@@ -30,8 +30,7 @@ export default {
   },
   methods: {
     ...mapActions(["deleteAccount", "updateAccout"]),
-    deleteAccount() {
-      console.log(this.obj.incomes.length);
+    viewdeleteAccount() {
       this.obj.incomes.length === 0 && this.obj.expenses.length === 0
         ? this.deleteAccount(this.account)
         : alert("Delete option disable");
