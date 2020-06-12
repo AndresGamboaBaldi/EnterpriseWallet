@@ -1,6 +1,9 @@
 <template>
-  <div id="income" class="main-container">
+  <div id="expenses" class="main-container">
     <div>
+      <br />
+      <br />
+      <label class>Expenses</label>
       <br />
       <br />
       <br />
@@ -26,10 +29,14 @@
       <span> {{ expenseDate }} </span>
       <br />
       <br />
-      <button @click="addNewExpense">Add new Expense</button>
+      <button @click="addNewExpense" class="buttons">
+        Add New Expense
+      </button>
       <br />
       <br />
-      <button @click="modifyExpense">Update Expense</button>
+      <button @click="modifyExpense" class="buttons">
+        Update Expense
+      </button>
     </div>
     <br />
     <br />
@@ -51,7 +58,9 @@
             <td>{{ expense.amount }}</td>
             <td>{{ expense.date }}</td>
             <td>
-              <button @click="removeExpense(expense.name)">Delete</button>
+              <button @click="removeExpense(expense.name)" class="buttons">
+                Delete
+              </button>
             </td>
           </tr>
         </tbody>
@@ -121,43 +130,16 @@ export default {
   }
 };
 </script>
-<style scoped>
-table {
-  border: 2px solid #194E70;
-  border-radius: 3px;
-  background-color: rgb(224, 212, 212);
-  margin-left: 300px;
+<style>
+html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
-th {
-  background-color: #194E70;
-  color: rgba(255,255,255,0.66);
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-td {
-  background-color: #f9f9f9;
-  color: #000;
-}
-th,
-td {
-  min-width: 120px;
-  padding: 10px 20px;
-}
-th.active {
-  color: #000;
-}
-th.active .arrow {
-  opacity: 1;
-}
-.arrow {
-  display: inline-block;
-  vertical-align: middle;
-  width: 0;
-  height: 0;
-  margin-left: 5px;
-  opacity: 0.66;
+.main-container {
+  background: black;
+  width: 100%;
+  height: 1500px;
+  font-size: medium;
 }
 </style>
