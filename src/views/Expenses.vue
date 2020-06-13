@@ -26,7 +26,6 @@
         </select>
       </div>
       <br />
-      <br />
       <label>Amount: </label>
       <input v-model="expenseAmount" />
       <label> Bs. </label>
@@ -36,13 +35,15 @@
       <span> {{ expenseDate }} </span>
       <br />
       <br />
-      <button @click="addNewTransfer">Add new Transfer</button>
-      <button @click="addNewExpense">Add new Expense</button>
-      <br />
+      <div v-if="expenseCategory === 'Transaction'">
+        <button @click="addNewTransfer">Add new Transfer</button>
+      </div>
+      <div v-else>
+        <button @click="addNewExpense">Add new Expense</button>
+      </div>
       <br />
       <button @click="modifyExpense">Update Expense</button>
     </div>
-    <br />
     <br />
     <div class="expenseTable">
       <table>
