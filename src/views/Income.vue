@@ -97,7 +97,8 @@ export default {
         name: this.incomeName,
         category: this.incomeCategory,
         amount: this.incomeAmount,
-        date: this.incomeDate
+        date: this.incomeDate,
+        is: "income"
       });
       //Clear input boxes
       this.clearBoxes();
@@ -116,7 +117,8 @@ export default {
         name: this.incomeName,
         category: this.incomeCategory,
         amount: this.incomeAmount,
-        date: this.incomeDate //
+        date: this.incomeDate,
+        is: "income"
       });
       console.log("UPDATED!");
       //Clear input boxes

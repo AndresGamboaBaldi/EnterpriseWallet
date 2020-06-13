@@ -2,78 +2,51 @@
   <div class="container">
     <h1>Welcome to your WALLET --- {{ obj.account }}</h1>
     <br />
-    <button @click="viewdeleteAccount()">Delete Account</button>
     <br />
-    <br />
-    <input v-model="account" placeholder="obj.account" />
+    <input v-model="account" placeholder="" />
     <br />
     <br />
     <button @click="changeNameAccount()">CHANGE NAME</button>
-    <div class="cred">
-      <div class="cred" style="background-color: white;">
-        <div :key="income.name" v-for="income in incomeList">
-          <ul>
-            <li>
-              {{ income.name }}
-              {{ income.category }}
-              {{ income.amount }}
-              {{ income.date }}
-            </li>
-          </ul>
-        </div>
-      </div>
-      <label>Select Date: </label>
-      <select v-model="incDate">
-        <option :key="aux.id" v-for="aux in dateList">{{ aux.name }} </option>
-      </select>
-      <br />
-      <div v-if="incDate === 'Day'">
-        <label>Choose date: </label>
-        <select v-model="incDay" placeholder="Choose date">
-          <option :key="income.name" v-for="income in incomeList">
-            {{ income.date }}
-          </option>
-        </select>
-      </div>
-      <div v-else>
-        <label>Not working</label>
-      </div>
-      <button @click="submitExpenseCat">Show incomes report</button>
-    </div>
-    <div class="cred">
-      <div class="cred" style="background-color: white;">
-        <div :key="expense.name" v-for="expense in expenseList">
-          <ul>
-            <li>
-              {{ expense.name }}
-              {{ expense.category }}
-              {{ expense.amount }}
-              {{ expense.date }}
-            </li>
-          </ul>
-        </div>
-      </div>
-      <label>Select Date: </label>
-      <select v-model="expDate">
-        <option
-          v-for="fechaExpense in dateList"
-          :value="fechaExpense.id"
-          :key="fechaExpense.id"
-          >{{ fechaExpense.name }}
-        </option>
-      </select>
-      <br />
-      <div v-if="expDate === 'Day'">
-        <label>Choose date: </label>
-        <select v-model="expDay" placeholder="Choose date">
-          <option :key="aux.id" v-for="aux in dateList">{{ aux.name }} </option>
-        </select>
-      </div>
-      <div v-else>
-        <label>Not working</label>
-      </div>
-      <button @click="submitExpenseCat">Show expenses report</button>
-    </div>
+    <button @click="viewdeleteAccount()">Delete Account</button>
+    <br />
+    <br />
+    <label>Choose a Category:</label>
+    <input v-model="categorylooked" placeholder="Category" />
+    <label>Choose a Date:</label>
+    <select v-model="datelooked">
+      <option :key="item.name" v-for="item in expenseIncomeList">{{
+        item.date
+      }}</option>
+      <option value="all">All</option>
+    </select>
+    <br />
+    <br />
+    <table id="table" border="1">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Amount</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr :key="item.code" v-for="item in filteredList">
+          <td :class="[item.is === 'income' ? 'green' : 'red']">
+            {{ item.name }}
+          </td>
+          <td :class="[item.is === 'income' ? 'green' : 'red']">
+            {{ item.category }}
+          </td>
+          <td :class="[item.is === 'income' ? 'green' : 'red']">
+            {{ item.amount }}
+          </td>
+          <td :class="[item.is === 'income' ? 'green' : 'red']">
+            {{ item.date }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -85,12 +58,8 @@ export default {
   data() {
     return {
       account: "",
-      dateList: [
-        { name: "Day", id: 1 },
-        { name: "Month", id: 2 },
-        { name: "Year", id: 3 }
-      ],
-      selectedfechaExpense: null
+      datelooked: "",
+      categorylooked: ""
     };
   },
   computed: {
@@ -106,6 +75,28 @@ export default {
     },
     obj() {
       return this.getAccount;
+    },
+    expenseIncomeList() {
+      var incomesExpesesList = this.expenseList.concat(this.incomeList);
+      function compare(a, b) {
+        if (a.date < b.date) return -1;
+        if (a.date > b.date) return 1;
+        return 0;
+      }
+      incomesExpesesList = incomesExpesesList.sort(compare);
+      return incomesExpesesList;
+    },
+    filteredList() {
+      console.log(this.categorylooked + "---" + this.datelooked);
+      const listByCategory =
+        this.categorylooked === ""
+          ? this.expenseIncomeList
+          : this.expenseIncomeList.filter(
+              item => item.category === this.categorylooked
+            );
+      return this.datelooked === "" || this.datelooked === "all"
+        ? listByCategory
+        : listByCategory.filter(item => item.date === this.datelooked);
     }
   },
   methods: {
@@ -124,5 +115,51 @@ export default {
 };
 </script>
 <style scoped>
-@import "categories.css";
+.red {
+  background: rgb(248, 117, 100);
+}
+.green {
+  background: rgb(51, 228, 89);
+}
+table {
+  border: 2px solid #194e70;
+  border-radius: 3px;
+  background-color: rgb(224, 212, 212);
+  margin-left: 300px;
+}
+
+th {
+  background-color: #195770;
+  color: rgba(255, 255, 255, 0.66);
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+td {
+  background-color: #f9f9f9;
+  color: #000;
+}
+
+th,
+td {
+  min-width: 120px;
+  padding: 10px 20px;
+}
+th.active {
+  color: #000;
+}
+th.active .arrow {
+  opacity: 1;
+}
+.arrow {
+  display: inline-block;
+  vertical-align: middle;
+  width: 0;
+  height: 0;
+  margin-left: 5px;
+  opacity: 0.66;
+}
 </style>

@@ -109,19 +109,21 @@ export default {
     ...mapActions(["updateExpense"]),
     ...mapActions(["deleteExpense"]),
     ...mapActions(["addIncomeTransfered"]),
-    addNewTransfer(){
+    addNewTransfer() {
       this.addExpense({
         name: this.expenseName,
         category: this.expenseCategory,
         amount: this.expenseAmount,
-        date: this.expenseDate
+        date: this.expenseDate,
+        is: "expense"
       });
       this.addIncomeTransfered({
         userAccount: this.transferUser,
         name: this.expenseName,
         category: this.expenseCategory,
         amount: this.expenseAmount,
-        date: this.expenseDate
+        date: this.expenseDate,
+        is: "expense"
       });
       this.clearBoxes();
     },
@@ -130,7 +132,8 @@ export default {
         name: this.expenseName,
         category: this.expenseCategory,
         amount: this.expenseAmount,
-        date: this.expenseDate
+        date: this.expenseDate,
+        is: "expense"
       });
       this.clearBoxes();
     },
@@ -139,7 +142,8 @@ export default {
         name: this.expenseName,
         category: this.expenseCategory,
         amount: this.expenseAmount,
-        date: this.expenseDate
+        date: this.expenseDate,
+        is: "expense"
       });
       this.clearBoxes();
     },
