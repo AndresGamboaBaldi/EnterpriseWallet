@@ -26,7 +26,7 @@
       <br />
       <br />
       <label>Date: </label>
-      <span> {{ expenseDate }} </span>
+      <span class="showndate"> {{ expenseDate }} </span>
       <br />
       <br />
       <button @click="addNewExpense" class="buttons">
@@ -40,7 +40,7 @@
     </div>
     <br />
     <br />
-    <div class="expenseTable">
+    <div v-if="expenseList.length > 0" class="expenseTable">
       <table>
         <thead>
           <tr>
@@ -101,22 +101,30 @@ export default {
     ...mapActions(["updateExpense"]),
     ...mapActions(["deleteExpense"]),
     addNewExpense() {
-      this.addExpense({
-        name: this.expenseName,
-        category: this.expenseCategory,
-        amount: this.expenseAmount,
-        date: this.expenseDate
-      });
-      this.clearBoxes();
+      if (this.validateFields()) {
+        this.addExpense({
+          name: this.expenseName,
+          category: this.expenseCategory,
+          amount: this.expenseAmount,
+          date: this.expenseDate
+        });
+        this.clearBoxes();
+      } else {
+        alert("Error Ocurred, Verify input fields");
+      }
     },
     modifyExpense() {
-      this.updateExpense({
-        name: this.expenseName,
-        category: this.expenseCategory,
-        amount: this.expenseAmount,
-        date: this.expenseDate
-      });
-      this.clearBoxes();
+      if (this.validateFields()) {
+        this.updateExpense({
+          name: this.expenseName,
+          category: this.expenseCategory,
+          amount: this.expenseAmount,
+          date: this.expenseDate
+        });
+        this.clearBoxes();
+      } else {
+        alert("Error Ocurred, Verify input fields");
+      }
     },
     removeExpense(nameToDelete) {
       this.deleteExpense(nameToDelete);
@@ -126,11 +134,33 @@ export default {
       this.expenseName = "";
       this.expenseCategory = "";
       this.expenseAmount = 0;
+    },
+    validateFields() {
+      if (
+        this.isEmptyString(this.expenseName) ||
+        this.isEmptyString(this.expenseCategory) ||
+        Number.isFinite(this.expenseAmount)
+      ) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    isEmptyString(string) {
+      if (string === "") {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 };
 </script>
 <style>
+.showndate {
+  color: white;
+  font-size: 30px;
+}
 html {
   width: 100%;
   height: 100%;
