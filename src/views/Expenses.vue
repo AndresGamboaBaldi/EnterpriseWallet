@@ -1,6 +1,9 @@
 <template>
-  <div id="income" class="main-container">
+  <div id="expenses" class="main-container">
     <div>
+      <br />
+      <br />
+      <label class>Expenses</label>
       <br />
       <br />
       <br />
@@ -32,7 +35,7 @@
       <br />
       <br />
       <label>Date: </label>
-      <span> {{ expenseDate }} </span>
+      <span class="showndate"> {{ expenseDate }} </span>
       <br />
       <br />
       <div v-if="expenseCategory === 'Transaction'">
@@ -42,7 +45,9 @@
         <button @click="addNewExpense">Add new Expense</button>
       </div>
       <br />
-      <button @click="modifyExpense">Update Expense</button>
+      <button @click="modifyExpense" class="buttons">
+        Update Expense
+      </button>
     </div>
     <br />
     <div class="expenseTable">
@@ -63,7 +68,9 @@
             <td>{{ expense.amount }}</td>
             <td>{{ expense.date }}</td>
             <td>
-              <button @click="removeExpense(expense.name)">Delete</button>
+              <button @click="removeExpense(expense.name)" class="buttons">
+                Delete
+              </button>
             </td>
           </tr>
         </tbody>
@@ -155,6 +162,24 @@ export default {
       this.expenseName = "";
       this.expenseCategory = "";
       this.expenseAmount = 0;
+    },
+    validateFields() {
+      if (
+        this.isEmptyString(this.expenseName) ||
+        this.isEmptyString(this.expenseCategory) ||
+        Number.isFinite(this.expenseAmount)
+      ) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    isEmptyString(string) {
+      if (string === "") {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 };
@@ -187,15 +212,15 @@ td {
 th.active {
   color: #000;
 }
-th.active .arrow {
-  opacity: 1;
+html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
-.arrow {
-  display: inline-block;
-  vertical-align: middle;
-  width: 0;
-  height: 0;
-  margin-left: 5px;
-  opacity: 0.66;
+.main-container {
+  background: black;
+  width: 100%;
+  height: 1500px;
+  font-size: medium;
 }
 </style>
