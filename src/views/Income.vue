@@ -148,7 +148,6 @@ export default {
           date: this.incomeDate,
           is: "income"
         });
-        console.log("UPDATED!");
         //Clear input boxes
         this.clearBoxes();
         this.showUpdateButton = false;
@@ -158,7 +157,6 @@ export default {
     },
     removeIncome(nameToDelete) {
       this.deleteIncome(nameToDelete);
-      console.log("DELETED!");
       //Clear input boxes
       this.clearBoxes();
     },
@@ -239,7 +237,7 @@ th.active .arrow {
 }
 .nameLabel,
 .dateLabel {
-  color: rgb(224, 212, 212);
+  color:rgb(226, 214, 214);
   font-size: 25px;
 }
 .animated {
@@ -249,7 +247,7 @@ th.active .arrow {
   display: inline-flex;
   margin: 0 auto;
   padding-top: 60px;
-  text-shadow: 0 0 80px rgba(255, 255, 255, 5);
+  text-shadow: 0 0 80px rgba(255,255,255,.5);
 
   /*Clip Background Image */
   background: url(http://f.cl.ly/items/010q3E1u3p2Q0j1L1S1o/animated_text_fill.png)
