@@ -4,10 +4,13 @@ import Categories from "@/views/Categories.vue";
 import Wallet from "@/views/Wallet.vue";
 import Expenses from "@/views/Expenses.vue";
 import Register from "@/views/Register.vue";
+import Income from "@/views/Income.vue";
+
 import store from "@/store";
 import VueRouter from "vue-router";
 import Vuex from "vuex";
 
+//CATEGORIES UNIT TEST
 describe("Income Category List ", () => {
   let localVue;
 
@@ -98,7 +101,7 @@ describe("Expense Category List ", () => {
     assert.exists(wrapper.find(buttonName));
   });
 });
-
+//WALLET UNIT TEST
 describe("Wallet Unit Test ", () => {
   let localVue;
 
@@ -128,7 +131,7 @@ describe("Wallet Unit Test ", () => {
     );
   });
 });
-
+//REGISTER UNIT TEST
 describe("Register Unit Test ", () => {
   let localVue;
 
@@ -151,6 +154,7 @@ describe("Register Unit Test ", () => {
     );
   });
 });
+//EXPENSES UNIT TEST
 describe("Expenses Logic Tests", () => {
   let localVue;
   beforeEach(() => {
@@ -208,5 +212,127 @@ describe("Expenses UI Tests", () => {
     const buttonsInUI = wrapper.findAll(".buttons");
     assert.isTrue(wrapper.exists());
     assert.equal(buttonsInUI.length, expectedNumberofButtons);
+  });
+});
+//INCOMES UNIT TEST
+describe("Incomes interface", () => {
+  let localVue;
+  beforeEach(() => {
+    localVue = createLocalVue();
+    localVue.use(VueRouter);
+    localVue.use(Vuex);
+  });
+  it("Interface exists", () => {
+    const wrapper = mount(Income, {
+      store,
+      localVue
+    });
+    let divName = "income";
+    assert.exists(wrapper.find(divName));
+  });
+});
+describe("CRUD methods in Income View", () => {
+  let localVue;
+  beforeEach(() => {
+    localVue = createLocalVue();
+    localVue.use(VueRouter);
+    localVue.use(Vuex);
+  });
+  it("Validation in fields works proppertly", () => {
+    const wrapper = mount(Income, {
+      store,
+      localVue
+    });
+    const expectedLength = wrapper.vm.$store.state.selectAccount.incomes.length;
+    //If all fields are invalid
+    wrapper.vm.addIncome({
+      name: "",
+      category: "",
+      amount: 0,
+      date: "14/06/2020"
+    });
+    assert.equal(
+      wrapper.vm.$store.state.selectAccount.incomes.length,
+      expectedLength
+    );
+    //If 2 fields are invalid
+    wrapper.vm.addIncome({
+      name: "Income1",
+      category: "",
+      amount: 0,
+      date: "14/06/2020"
+    });
+    assert.equal(
+      wrapper.vm.$store.state.selectAccount.incomes.length,
+      expectedLength
+    );
+    //If 1 field is invalid
+    wrapper.vm.addIncome({
+      name: "Income2",
+      category: "Transaction",
+      amount: 0,
+      date: "14/06/2020"
+    });
+    assert.equal(
+      wrapper.vm.$store.state.selectAccount.incomes.length,
+      expectedLength
+    );
+  });
+  it("Adding new Income works correctly", () => {
+    const wrapper = mount(Income, {
+      store,
+      localVue
+    });
+    const initialLength = wrapper.vm.$store.state.selectAccount.incomes.length;
+    const expectedLength = initialLength + 2;
+    //If all fields are valid
+    wrapper.vm.addIncome({
+      name: "NewIncome",
+      category: "Other",
+      amount: 1000,
+      date: "14/06/2020"
+    });
+    wrapper.vm.addIncome({
+      name: "NewIncome2",
+      category: "Transaction",
+      amount: 2000,
+      date: "14/06/2020"
+    });
+    assert.equal(
+      wrapper.vm.$store.state.selectAccount.incomes.length,
+      expectedLength
+    );
+  });
+  it("Don't add a new Income if its name already exists.", () => {
+    const wrapper = mount(Income, {
+      store,
+      localVue
+    });
+    const expectedLength = wrapper.vm.$store.state.selectAccount.incomes.length;
+    //If all fields are valid but the newIncome's name already exists
+    wrapper.vm.addIncome({
+      name: "NewIncome",
+      category: "Other",
+      amount: 2000,
+      date: "14/06/2020"
+    });
+    assert.equal(
+      wrapper.vm.$store.state.selectAccount.incomes.length,
+      expectedLength
+    );
+  });
+  it("Delete an Income works correctly", () => {
+    const wrapper = mount(Income, {
+      store,
+      localVue
+    });
+    const initialLength = wrapper.vm.$store.state.selectAccount.incomes.length;
+    const expectedLength = initialLength - 1;
+    //If all fields are valid
+    wrapper.vm.deleteIncome("NewIncome2");
+    assert.equal(
+      wrapper.vm.$store.state.selectAccount.incomes.length,
+      expectedLength
+    );
   });
 });

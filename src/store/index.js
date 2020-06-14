@@ -97,6 +97,7 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    //Accounts
     mutateAccounts(state, newAccount) {
       state.accounts.push(newAccount);
     },
@@ -117,6 +118,7 @@ export default new Vuex.Store({
         state.accounts.splice(indexOfItem, 1);
       }
     },
+    //Expense
     mutateAddExpense(state, newExpense) {
       state.selectAccount.expenses.push(newExpense);
     },
@@ -140,6 +142,7 @@ export default new Vuex.Store({
         state.selectAccount.expenses.splice(indexOfItem, 1);
       }
     },
+    //Categories
     mutateIncomeList(state, category) {
       if (category.name != "") {
         var rep = false;
@@ -168,7 +171,21 @@ export default new Vuex.Store({
     },
     //Income
     mutateAddIncome(state, newIncome) {
-      state.selectAccount.incomes.push(newIncome);
+      var existingIncome = false;
+      if (
+        (newIncome.name !== "" || newIncome.name !== null) &&
+        newIncome.category !== "" &&
+        newIncome.amount > 0
+      ) {
+        state.selectAccount.incomes.forEach(income => {
+          if (income.name === newIncome.name) {
+            existingIncome = true;
+          }
+        });
+        if (!existingIncome) {
+          state.selectAccount.incomes.push(newIncome);
+        }
+      }
     },
     mutateAddTransferedIncome(state, newTransferedIncome) {
       const newIncome = {
@@ -185,19 +202,19 @@ export default new Vuex.Store({
       });
     },
     mutateUpdateIncome(state, updatedIncome) {
-      //var list = state.selectAccount.incomes;
       var index;
       state.selectAccount.incomes.forEach(income => {
         if (income.name === updatedIncome.name) {
           index = state.selectAccount.incomes.indexOf(income);
           if (index > -1) {
-            state.selectAccount.incomes.splice(index, 1, updatedIncome);
+            if (updatedIncome.category !== "" && updatedIncome.amount > 0) {
+              state.selectAccount.incomes.splice(index, 1, updatedIncome);
+            }
           }
         }
       });
     },
     mutateDeleteIncome(state, incomeToDelete) {
-      // var list = state.selectAccount.incomes;
       var index;
       state.selectAccount.incomes.forEach(income => {
         if (income.name === incomeToDelete) {
