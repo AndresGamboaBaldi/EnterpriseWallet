@@ -1,6 +1,9 @@
 <template>
-  <div id="income" class="main-container">
+  <div id="expenses" class="main-container">
     <div>
+      <br />
+      <br />
+      <label class>Expenses</label>
       <br />
       <br />
       <br />
@@ -32,7 +35,7 @@
       <br />
       <br />
       <label>Date: </label>
-      <span> {{ expenseDate }} </span>
+      <span class="showndate"> {{ expenseDate }} </span>
       <br />
       <br />
       <div v-if="expenseCategory === 'Transaction'">
@@ -42,10 +45,12 @@
         <button @click="addNewExpense">Add new Expense</button>
       </div>
       <br />
-      <button @click="modifyExpense">Update Expense</button>
+      <button @click="modifyExpense" class="buttons">
+        Update Expense
+      </button>
     </div>
     <br />
-    <div class="expenseTable">
+    <div v-if="expenseList.length > 0" class="expenseTable">
       <table>
         <thead>
           <tr>
@@ -63,7 +68,9 @@
             <td>{{ expense.amount }}</td>
             <td>{{ expense.date }}</td>
             <td>
-              <button @click="removeExpense(expense.name)">Delete</button>
+              <button @click="removeExpense(expense.name)" class="buttons">
+                Delete
+              </button>
             </td>
           </tr>
         </tbody>
@@ -128,24 +135,32 @@ export default {
       this.clearBoxes();
     },
     addNewExpense() {
-      this.addExpense({
-        name: this.expenseName,
-        category: this.expenseCategory,
-        amount: this.expenseAmount,
-        date: this.expenseDate,
-        is: "expense"
-      });
-      this.clearBoxes();
+      if (this.validateFields()) {
+        this.addExpense({
+          name: this.expenseName,
+          category: this.expenseCategory,
+          amount: this.expenseAmount,
+          date: this.expenseDate,
+          is: "expense"
+        });
+        this.clearBoxes();
+      } else {
+        alert("Error Ocurred, Verify input fields");
+      }
     },
     modifyExpense() {
-      this.updateExpense({
-        name: this.expenseName,
-        category: this.expenseCategory,
-        amount: this.expenseAmount,
-        date: this.expenseDate,
-        is: "expense"
-      });
-      this.clearBoxes();
+      if (this.validateFields()) {
+        this.updateExpense({
+          name: this.expenseName,
+          category: this.expenseCategory,
+          amount: this.expenseAmount,
+          date: this.expenseDate,
+          is: "expense"
+        });
+        this.clearBoxes();
+      } else {
+        alert("Error Ocurred, Verify input fields");
+      }
     },
     removeExpense(nameToDelete) {
       this.deleteExpense(nameToDelete);
@@ -155,47 +170,42 @@ export default {
       this.expenseName = "";
       this.expenseCategory = "";
       this.expenseAmount = 0;
+    },
+    validateFields() {
+      if (
+        this.isEmptyString(this.expenseName) ||
+        this.isEmptyString(this.expenseCategory) ||
+        Number.isFinite(this.expenseAmount)
+      ) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    isEmptyString(string) {
+      if (string === "") {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 };
 </script>
-<style scoped>
-table {
-  border: 2px solid #194e70;
-  border-radius: 3px;
-  background-color: rgb(224, 212, 212);
-  margin-left: 300px;
+<style>
+.showndate {
+  color: white;
+  font-size: 30px;
 }
-th {
-  background-color: #194e70;
-  color: rgba(255, 255, 255, 0.66);
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
-td {
-  background-color: #f9f9f9;
-  color: #000;
-}
-th,
-td {
-  min-width: 120px;
-  padding: 10px 20px;
-}
-th.active {
-  color: #000;
-}
-th.active .arrow {
-  opacity: 1;
-}
-.arrow {
-  display: inline-block;
-  vertical-align: middle;
-  width: 0;
-  height: 0;
-  margin-left: 5px;
-  opacity: 0.66;
+.main-container {
+  background: black;
+  width: 100%;
+  height: 1500px;
+  font-size: medium;
 }
 </style>
