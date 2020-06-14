@@ -266,10 +266,10 @@ describe("CRUD methods in Income View", () => {
       wrapper.vm.$store.state.selectAccount.incomes.length,
       expectedLength
     );
-    //If 1 field are invalid
+    //If 1 field is invalid
     wrapper.vm.addIncome({
       name: "Income2",
-      category: "Transactiton",
+      category: "Transaction",
       amount: 0,
       date: "14/06/2020"
     });

@@ -202,7 +202,6 @@ export default new Vuex.Store({
       });
     },
     mutateUpdateIncome(state, updatedIncome) {
-      //var list = state.selectAccount.incomes;
       var index;
       state.selectAccount.incomes.forEach(income => {
         if (income.name === updatedIncome.name) {
@@ -216,7 +215,6 @@ export default new Vuex.Store({
       });
     },
     mutateDeleteIncome(state, incomeToDelete) {
-      // var list = state.selectAccount.incomes;
       var index;
       state.selectAccount.incomes.forEach(income => {
         if (income.name === incomeToDelete) {

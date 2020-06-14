@@ -237,7 +237,7 @@ th.active .arrow {
 }
 .nameLabel,
 .dateLabel {
-  color:rgb(226, 214, 214);
+  color: #f9f9f9;
   font-size: 25px;
 }
 .animated {
@@ -247,7 +247,7 @@ th.active .arrow {
   display: inline-flex;
   margin: 0 auto;
   padding-top: 60px;
-  text-shadow: 0 0 80px rgba(255,255,255,.5);
+  text-shadow: 0 0 80px rgba(255, 255, 255, 0.5);
 
   /*Clip Background Image */
   background: url(http://f.cl.ly/items/010q3E1u3p2Q0j1L1S1o/animated_text_fill.png)
