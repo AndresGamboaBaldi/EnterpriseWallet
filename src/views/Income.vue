@@ -1,12 +1,12 @@
 <template>
   <div id="income" class="main-container">
+    <label class="animated">INCOMES</label>
     <div>
-      <br />
-      <br />
-      <br />
-      <br />
       <label>Income's Name: </label>
-      <input v-model="incomeName" />
+      <input v-if="!this.showNameLabel" v-model="incomeName" />
+      <label class="nameLabel" v-if="this.showNameLabel"
+        >{{ nameLabel }}
+      </label>
       <br />
       <br />
       <label>Category: </label>
@@ -23,13 +23,15 @@
       <br />
       <br />
       <label>Date: </label>
-      <span> {{ incomeDate }} </span>
+      <span class="dateLabel"> {{ incomeDate }} </span>
       <br />
       <br />
-      <button @click="registerIncome">REGISTER</button>
+      <button v-if="this.showRegisterButton" @click="registerIncome">
+        REGISTER
+      </button>
       <br />
       <br />
-      <button @click="modifyIncome">Update Income</button>
+      <button v-if="this.showUpdateButton" @click="modifyIncome">UPDATE</button>
     </div>
     <br />
     <br />
@@ -37,10 +39,10 @@
       <table>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Amount (Bs.)</th>
-            <th>Date</th>
+            <th>NAME</th>
+            <th>CATEGORY</th>
+            <th>AMOUNT (Bs.)</th>
+            <th>DATE</th>
             <th></th>
             <th></th>
           </tr>
@@ -69,7 +71,11 @@ export default {
     return {
       incomeName: "",
       incomeCategory: "",
-      incomeAmount: 0
+      incomeAmount: 0,
+      showUpdateButton: false,
+      showRegisterButton: true,
+      showNameLabel: false,
+      nameLabel: ""
     };
   },
   computed: {
@@ -93,36 +99,62 @@ export default {
     ...mapActions(["updateIncome"]),
     ...mapActions(["deleteIncome"]),
     registerIncome() {
-      this.addIncome({
-        name: this.incomeName,
-        category: this.incomeCategory,
-        amount: this.incomeAmount,
-        date: this.incomeDate,
-        is: "income"
-      });
-      //Clear input boxes
-      this.clearBoxes();
+      if (this.validateData()) {
+        alert("All fields must be filled.");
+      } else {
+        var existingName = false;
+        this.incomeList.forEach(income => {
+          if (income.name === this.incomeName) {
+            existingName = true;
+            alert(
+              "This income's name already exists!. Please introduce another one."
+            );
+            this.incomeName = "";
+          }
+        });
+        if (!existingName) {
+          this.addIncome({
+            name: this.incomeName,
+            category: this.incomeCategory,
+            amount: this.incomeAmount,
+            date: this.incomeDate,
+            is: "income"
+          });
+          //Clear input boxes
+          this.clearBoxes();
+        }
+      }
     },
     setData(name) {
       this.incomeList.forEach(income => {
         if (income.name === name) {
-          this.incomeName = income.name;
+          this.showNameLabel = true;
+          this.nameLabel = income.name;
           this.incomeCategory = income.category;
           this.incomeAmount = income.amount;
         }
       });
+      this.showUpdateButton = true;
+      this.showRegisterButton = false;
     },
     modifyIncome() {
-      this.updateIncome({
-        name: this.incomeName,
-        category: this.incomeCategory,
-        amount: this.incomeAmount,
-        date: this.incomeDate,
-        is: "income"
-      });
-      console.log("UPDATED!");
-      //Clear input boxes
-      this.clearBoxes();
+      if (this.validateData()) {
+        alert("All fields must be filled.");
+      } else {
+        this.updateIncome({
+          name: this.nameLabel,
+          category: this.incomeCategory,
+          amount: this.incomeAmount,
+          date: this.incomeDate,
+          is: "income"
+        });
+        console.log("UPDATED!");
+        //Clear input boxes
+        this.clearBoxes();
+        this.showUpdateButton = false;
+        this.showRegisterButton = true;
+        this.showNameLabel = false;
+      }
     },
     removeIncome(nameToDelete) {
       this.deleteIncome(nameToDelete);
@@ -134,20 +166,47 @@ export default {
       this.incomeName = "";
       this.incomeCategory = "";
       this.incomeAmount = 0;
+    },
+    validateData() {
+      var name = this.incomeName;
+      var category = this.incomeCategory;
+      var amount = this.incomeAmount;
+      if (this.showNameLabel) {
+        if (category === "" || amount <= 0) {
+          return true;
+        }
+      } else {
+        if (name === "" || name === null || category === "" || amount <= 0) {
+          return true;
+        }
+      }
     }
   }
 };
 </script>
+
 <style scoped>
+.main-container {
+  background-color: #000;
+  font-family: "Oswald", sans-serif;
+  font-style: bold;
+  width: 100%;
+  height: 1500px;
+}
+input,
+select {
+  font-size: 20px;
+  text-align: center;
+}
 table {
-  border: 2px solid #194e70;
+  font: "Oswald", sans-serif;
+  border: 2px solid #bea42f;
   border-radius: 3px;
   background-color: rgb(224, 212, 212);
-  margin-left: 300px;
+  margin-left: 230px;
 }
-
 th {
-  background-color: #194e70;
+  background-color: #a07d2b;
   color: rgba(255, 255, 255, 0.66);
   cursor: pointer;
   -webkit-user-select: none;
@@ -155,12 +214,10 @@ th {
   -ms-user-select: none;
   user-select: none;
 }
-
 td {
   background-color: #f9f9f9;
   color: #000;
 }
-
 th,
 td {
   min-width: 120px;
@@ -179,5 +236,41 @@ th.active .arrow {
   height: 0;
   margin-left: 5px;
   opacity: 0.66;
+}
+.nameLabel,
+.dateLabel {
+  color: rgb(224, 212, 212);
+  font-size: 25px;
+}
+.animated {
+  font: 700 4em/1 "Oswald", sans-serif;
+  letter-spacing: 0;
+  padding: 0.25em 0 0.325em;
+  display: inline-flex;
+  margin: 0 auto;
+  padding-top: 60px;
+  text-shadow: 0 0 80px rgba(255, 255, 255, 5);
+
+  /*Clip Background Image */
+  background: url(http://f.cl.ly/items/010q3E1u3p2Q0j1L1S1o/animated_text_fill.png)
+    repeat-y;
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  /* Animate Background Image */
+  -webkit-text-fill-color: transparent;
+  animation: aitf 80s linear infinite;
+  /* Activate hardware acceleration for smoother animations */
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+/* Animate Background Image */
+@keyframes aitf {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
 }
 </style>
