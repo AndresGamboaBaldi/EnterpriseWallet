@@ -3,7 +3,7 @@
     <div>
       <br />
       <br />
-      <label class>Expenses</label>
+      <label id="expensesTitle">Expenses</label>
       <br />
       <br />
       <br />
@@ -39,10 +39,12 @@
       <br />
       <br />
       <div v-if="expenseCategory === 'Transaction'">
-        <button @click="addNewTransfer">Add new Transfer</button>
+        <button @click="addNewTransfer" class="buttons">
+          Add new Transfer
+        </button>
       </div>
       <div v-else>
-        <button @click="addNewExpense">Add new Expense</button>
+        <button @click="addNewExpense" class="buttons">Add new Expense</button>
       </div>
       <br />
       <button @click="modifyExpense" class="buttons">
@@ -50,7 +52,7 @@
       </button>
     </div>
     <br />
-    <div v-if="expenseList.length > 0" class="expenseTable">
+    <div v-if="expenseList.length > 0" class="expenseTable" id="expensesTable">
       <table>
         <thead>
           <tr>
