@@ -123,7 +123,7 @@ export default {
         category: this.expenseCategory,
         amount: this.expenseAmount,
         date: this.expenseDate,
-        is: "expense"
+        is: "income"
       });
       this.clearBoxes();
     },

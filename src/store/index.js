@@ -9,8 +9,38 @@ export default new Vuex.Store({
       {
         account: "root",
         type: "debit",
-        incomes: [],
-        expenses: []
+        incomes: [
+          {
+            name: "prueba1",
+            category: "other",
+            amount: "15548",
+            date: "12/1/2020",
+            is: "income"
+          },
+          {
+            name: "prueba2",
+            category: "other",
+            amount: "15548",
+            date: "12/3/2020",
+            is: "income"
+          }
+        ],
+        expenses: [
+          {
+            name: "prueba3",
+            category: "other",
+            amount: "15548",
+            date: "12/5/2020",
+            is: "expense"
+          },
+          {
+            name: "prueba4",
+            category: "other",
+            amount: "15548",
+            date: "12/2/2020",
+            is: "expense"
+          }
+        ]
       }
     ],
     selectAccount: {
@@ -145,10 +175,11 @@ export default new Vuex.Store({
         name: newTransferedIncome.name,
         category: newTransferedIncome.category,
         amount: newTransferedIncome.amount,
-        date: newTransferedIncome.date
+        date: newTransferedIncome.date,
+        is: newTransferedIncome.is
       };
       state.accounts.forEach(account => {
-        if (account.account === account.account) {
+        if (account.account === newTransferedIncome.userAccount) {
           account.incomes.push(newIncome);
         }
       });
