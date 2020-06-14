@@ -20,6 +20,15 @@
       </select>
       <br />
       <br />
+      <div v-if="expenseCategory === 'Transaction'">
+        <label>Account To Transfer: </label>
+        <select v-model="transferUser" placeholder="Account to transfer">
+          <option :key="index" v-for="(account, index) in accounts">
+            {{ account.account }}
+          </option>
+        </select>
+      </div>
+      <br />
       <label>Amount: </label>
       <input v-model="expenseAmount" />
       <label> Bs. </label>
@@ -29,16 +38,17 @@
       <span class="showndate"> {{ expenseDate }} </span>
       <br />
       <br />
-      <button @click="addNewExpense" class="buttons">
-        Add New Expense
-      </button>
-      <br />
+      <div v-if="expenseCategory === 'Transaction'">
+        <button @click="addNewTransfer">Add new Transfer</button>
+      </div>
+      <div v-else>
+        <button @click="addNewExpense">Add new Expense</button>
+      </div>
       <br />
       <button @click="modifyExpense" class="buttons">
         Update Expense
       </button>
     </div>
-    <br />
     <br />
     <div v-if="expenseList.length > 0" class="expenseTable">
       <table>
@@ -82,6 +92,7 @@ export default {
   },
   computed: {
     ...mapGetters(["getCategoryList"]),
+    ...mapGetters(["getAccounts"]),
     ...mapGetters(["getExpenseList"]),
     expenseDate() {
       var date = new Date();
@@ -94,19 +105,43 @@ export default {
     },
     expenseList() {
       return this.getExpenseList;
+    },
+    accounts() {
+      return this.getAccounts;
     }
   },
   methods: {
     ...mapActions(["addExpense"]),
+    ...mapActions(["addIncome"]),
     ...mapActions(["updateExpense"]),
     ...mapActions(["deleteExpense"]),
+    ...mapActions(["addIncomeTransfered"]),
+    addNewTransfer() {
+      this.addExpense({
+        name: this.expenseName,
+        category: this.expenseCategory,
+        amount: this.expenseAmount,
+        date: this.expenseDate,
+        is: "expense"
+      });
+      this.addIncomeTransfered({
+        userAccount: this.transferUser,
+        name: this.expenseName,
+        category: this.expenseCategory,
+        amount: this.expenseAmount,
+        date: this.expenseDate,
+        is: "income"
+      });
+      this.clearBoxes();
+    },
     addNewExpense() {
       if (this.validateFields()) {
         this.addExpense({
           name: this.expenseName,
           category: this.expenseCategory,
           amount: this.expenseAmount,
-          date: this.expenseDate
+          date: this.expenseDate,
+          is: "expense"
         });
         this.clearBoxes();
       } else {
@@ -119,7 +154,8 @@ export default {
           name: this.expenseName,
           category: this.expenseCategory,
           amount: this.expenseAmount,
-          date: this.expenseDate
+          date: this.expenseDate,
+          is: "expense"
         });
         this.clearBoxes();
       } else {

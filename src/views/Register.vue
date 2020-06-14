@@ -2,14 +2,14 @@
   <div class="about">
     <h1>Create new Account</h1>
     <br />
-    <input v-model="account" placeholder="New User" />
+    <input v-model="newAccount" placeholder="New User" />
     <br />
     <br />
     <label>Type of Account :</label>
     <br />
-    <input type="radio" v-model="type" value="debit" />DEBIT
+    <input type="radio" v-model="newType" value="debit" />DEBIT
     <br />
-    <input type="radio" v-model="type" value="credit" />CREDIT
+    <input type="radio" v-model="newType" value="credit" />CREDIT
     <br />
     <br />
     <button @click="validateContext()">CREATE</button>
@@ -17,24 +17,31 @@
 </template>
 
 <script>
-import Router from "vue-router";
-import Vue from "vue";
-Vue.use(Router);
+import { mapActions } from "vuex";
 
 export default {
   name: "Register",
   components: {},
   data() {
     return {
-      acount: "",
-      type: ""
+      newAccount: "",
+      newType: ""
     };
   },
   methods: {
+    ...mapActions(["addAccount"]),
     validateContext() {
-      this.acount === "" || this.type === ""
+      this.newAccount === "" || this.newType === ""
         ? alert("Must put a User Name or Type")
-        : this.name;
+        : this.submitAccount();
+    },
+    submitAccount() {
+      this.addAccount({
+        account: this.newAccount,
+        type: this.newType,
+        incomes: [],
+        expenses: []
+      });
     }
   }
 };

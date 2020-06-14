@@ -9,8 +9,38 @@ export default new Vuex.Store({
       {
         account: "root",
         type: "debit",
-        incomes: [],
-        expenses: []
+        incomes: [
+          {
+            name: "prueba1",
+            category: "other",
+            amount: "15548",
+            date: "12/1/2020",
+            is: "income"
+          },
+          {
+            name: "prueba2",
+            category: "other",
+            amount: "15548",
+            date: "12/3/2020",
+            is: "income"
+          }
+        ],
+        expenses: [
+          {
+            name: "prueba3",
+            category: "other",
+            amount: "15548",
+            date: "12/5/2020",
+            is: "expense"
+          },
+          {
+            name: "prueba4",
+            category: "other",
+            amount: "15548",
+            date: "12/2/2020",
+            is: "expense"
+          }
+        ]
       }
     ],
     selectAccount: {
@@ -25,8 +55,17 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    setUser({ commit }, currentUser) {
-      commit("mutateUser", currentUser);
+    addAccount({ commit }, newAccount) {
+      commit("mutateAccounts", newAccount);
+    },
+    chooseAccount({ commit }, newSeletedAccount) {
+      commit("mutateSelectAccount", newSeletedAccount);
+    },
+    updateAccout({ commit }, newNameAccount) {
+      commit("mutateUpdateAccount", newNameAccount);
+    },
+    deleteAccount({ commit }, nameAccount) {
+      commit("mutateDeleteAccount", nameAccount);
     },
     addExpense({ commit }, newExpense) {
       commit("mutateAddExpense", newExpense);
@@ -58,11 +97,25 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    mutateUser(state, currentUser) {
-      state.obj.account = currentUser.account;
-      state.obj.type = currentUser.type;
-      state.obj.incomes = currentUser.incomes;
-      state.expenses = currentUser.expenses;
+    mutateAccounts(state, newAccount) {
+      state.accounts.push(newAccount);
+    },
+    mutateSelectAccount(state, newSeletedAccount) {
+      state.selectAccount.account = newSeletedAccount.account;
+      state.selectAccount.type = newSeletedAccount.type;
+      state.selectAccount.incomes = newSeletedAccount.incomes;
+      state.selectAccount.expenses = newSeletedAccount.expenses;
+    },
+    mutateUpdateAccount(state, newNameAccount) {
+      state.selectAccount.account = newNameAccount;
+    },
+    mutateDeleteAccount(state, nameAccount) {
+      var indexOfItem;
+      state.accounts.find(item => item.account === nameAccount);
+      indexOfItem = state.accounts.indexOf(this.item);
+      if (this.item !== null) {
+        state.accounts.splice(indexOfItem, 1);
+      }
     },
     mutateAddExpense(state, newExpense) {
       state.selectAccount.expenses.push(newExpense);
@@ -122,10 +175,11 @@ export default new Vuex.Store({
         name: newTransferedIncome.name,
         category: newTransferedIncome.category,
         amount: newTransferedIncome.amount,
-        date: newTransferedIncome.date
+        date: newTransferedIncome.date,
+        is: newTransferedIncome.is
       };
       state.accounts.forEach(account => {
-        if (account.account === account.account) {
+        if (account.account === newTransferedIncome.userAccount) {
           account.incomes.push(newIncome);
         }
       });
@@ -156,8 +210,11 @@ export default new Vuex.Store({
     }
   },
   getters: {
-    getUser(state) {
-      return state.obj;
+    getAccounts(state) {
+      return state.accounts;
+    },
+    getAccount(state) {
+      return state.selectAccount;
     },
     getExpenseList(state) {
       return state.selectAccount.expenses;
