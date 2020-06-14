@@ -4,6 +4,8 @@ import { /* expect, */ assert } from "chai";
 import { shallowMount, createLocalVue, mount } from "@vue/test-utils";
 //import HelloWorld from "@/components/HelloWorld.vue";
 import Categories from "@/views/Categories.vue";
+import Wallet from "@/views/Wallet.vue";
+import Register from "@/views/Register.vue";
 import store from "@/store";
 import VueRouter from "vue-router";
 import Vuex from "vuex";
@@ -97,4 +99,58 @@ describe("Expense Category List ", () => {
     let buttonName = "SubmitExpenseCategory";
     assert.exists(wrapper.find(buttonName));
   });
+});
+
+describe("Wallet Unit Test ", () => {
+  let localVue;
+
+  beforeEach(() => {
+    localVue = createLocalVue();
+    localVue.use(VueRouter);
+    localVue.use(Vuex);
+  });
+  it("Wallet View Exists", () => {
+    const wrapper = shallowMount(Wallet, {
+      store,
+      localVue
+    });
+    let DivName = "WalletView";
+    assert.exists(wrapper.find(DivName));
+  });
+  it("Delete Account Works", () => {
+    const wrapper = shallowMount(Wallet, {
+      store,
+      localVue
+    });
+    wrapper.vm.deleteAccount("root");
+    let expectedInitialLength = 0;
+    assert.equal(
+      expectedInitialLength,
+      wrapper.vm.$store.state.accounts.length
+    );
+  });
+});
+
+describe("Register Unit Test ", () => {
+  let localVue;
+
+  beforeEach(() => {
+    localVue = createLocalVue();
+    localVue.use(VueRouter);
+    localVue.use(Vuex);
+  });
+  // ->
+  it("Add new Account Works", () => {
+    const wrapper = shallowMount(Register, {
+      store,
+      localVue
+    });
+    wrapper.vm.addAccount({ name: "added" });
+    let expectedInitialLength = 1;
+    assert.equal(
+      expectedInitialLength,
+      wrapper.vm.$store.state.accounts.length
+    );
+  });
+  // <-
 });

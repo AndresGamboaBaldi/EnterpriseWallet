@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div id="WalletView" class="container">
     <h1>Welcome to your WALLET --- {{ obj.account }}</h1>
     <br />
     <br />
