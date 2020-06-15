@@ -119,33 +119,7 @@ export default {
     ...mapActions(["deleteExpense"]),
     ...mapActions(["addIncomeTransfered"]),
     addNewTransfer() {
-      if (this.account.balance >= this.expenseAmount) {
-        this.addExpense({
-          name: this.expenseName,
-          category: this.expenseCategory,
-          amount: Number(this.expenseAmount),
-          date: this.expenseDate,
-          is: "expense"
-        });
-        this.addIncomeTransfered({
-          userAccount: this.transferUser,
-          name: this.expenseName,
-          category: this.expenseCategory,
-          amount: Number(this.expenseAmount),
-          date: this.expenseDate,
-          is: "income"
-        });
-        this.clearBoxes();
-      } else {
-        alert(
-          "Balance:" +
-            this.account.balance +
-            " Bs.\nYou don't have enough  money."
-        );
-      }
-    },
-    addNewExpense() {
-      if (this.validateFields()) {
+      if (this.nameNotExists()) {
         if (this.account.balance >= this.expenseAmount) {
           this.addExpense({
             name: this.expenseName,
@@ -153,6 +127,14 @@ export default {
             amount: Number(this.expenseAmount),
             date: this.expenseDate,
             is: "expense"
+          });
+          this.addIncomeTransfered({
+            userAccount: this.transferUser,
+            name: this.expenseName,
+            category: this.expenseCategory,
+            amount: Number(this.expenseAmount),
+            date: this.expenseDate,
+            is: "income"
           });
           this.clearBoxes();
         } else {
@@ -163,7 +145,33 @@ export default {
           );
         }
       } else {
-        alert("Error Ocurred, Verify input fields");
+        alert("Error Ocurred, Expense name already exists");
+      }
+    },
+    addNewExpense() {
+      if (this.nameNotExists()) {
+        if (this.validateFields()) {
+          if (this.account.balance >= this.expenseAmount) {
+            this.addExpense({
+              name: this.expenseName,
+              category: this.expenseCategory,
+              amount: Number(this.expenseAmount),
+              date: this.expenseDate,
+              is: "expense"
+            });
+            this.clearBoxes();
+          } else {
+            alert(
+              "Balance:" +
+                this.account.balance +
+                " Bs.\nYou don't have enough  money."
+            );
+          }
+        } else {
+          alert("Error Ocurred, Verify input fields");
+        }
+      } else {
+        alert("Error Ocurred, Name Already Exists");
       }
     },
     modifyExpense() {
@@ -194,6 +202,20 @@ export default {
       var category = this.expenseCategory;
       var amount = this.expenseAmount;
       if (name === "" || name === null || category === "" || amount <= 0) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    nameNotExists() {
+      let exists = false;
+      this.expenseList.forEach(expense => {
+        if (expense.name === this.expenseName) {
+          this.expenseName = "";
+          exists = true;
+        }
+      });
+      if (exists) {
         return false;
       } else {
         return true;
