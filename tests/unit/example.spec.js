@@ -336,3 +336,69 @@ describe("CRUD methods in Income View", () => {
     );
   });
 });
+
+describe("Transfer Unit Testing", () => {
+  let localVue;
+  beforeEach(() => {
+    localVue = createLocalVue();
+    localVue.use(VueRouter);
+    localVue.use(Vuex);
+  });
+  
+  it("Transfer Button does exist", () => {
+    const wrapper = shallowMount(Categories, {
+      store,
+      localVue
+    });
+    let buttonName = "SubmitTransfer";
+    assert.exists(wrapper.find(buttonName));
+  });
+
+  it("Adding new Transfer works correctly", () => {
+    const wrapper = mount(Expenses, {
+      store,
+      localVue
+    });
+    const initialIncomesLength = wrapper.vm.$store.state.selectAccount.incomes.length;
+    const expectedIncomesLength = initialIncomesLength + 1;
+    //If all fields are valid
+    wrapper.vm.addIncome({
+      name: "NewTransferedIncome",
+      category: "Other",
+      amount: 1000,
+      date: "14/06/2020"
+    });
+    console.log("Transfered income added");
+    assert.equal(
+      wrapper.vm.$store.state.selectAccount.incomes.length,
+      expectedIncomesLength
+    );
+    /*wrapper.vm.addIncomeTransfered({
+      userAccount: "root",
+      name: "NewTransferedIncome",
+      category: "Other",
+      amount: 1000,
+      date: "14/06/2020"
+    });
+    console.log("actual expenses length " + initialLength);
+    assert.equal(
+      wrapper.vm.$store.state.selectAccount.incomes.length,
+      expectedLength
+    );*/
+    const initialExpensesLength = wrapper.vm.$store.state.selectAccount.expenses.length;
+    const expectedExpensesLength = initialExpensesLength + 1;
+    wrapper.vm.addExpense({
+      name: "NewTransferedExpense",
+      category: "Other",
+      amount: 1000,
+      date: "14/06/2020"
+    });
+    console.log("Expense of transfer added");
+    assert.equal(
+      wrapper.vm.$store.state.selectAccount.expenses.length,
+      expectedExpensesLength
+    );
+    
+  });
+});
+
