@@ -3,7 +3,7 @@
     <HelloWorld
       class="animated"
       style="font-size: 40px"
-      msg="Welcome to IWallet "
+      msg="Welcome to iWallet "
     />
     <br />
     <label>Account's name: </label>
