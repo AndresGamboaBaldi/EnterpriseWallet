@@ -12,13 +12,35 @@
     <br />
     <label>Choose a Category:</label>
     <input v-model="categorylooked" placeholder="Category" />
-    <label>Choose a Date:</label>
-    <select v-model="datelooked">
-      <option :key="item.name" v-for="item in expenseIncomeList">{{
-        item.date
-      }}</option>
-      <option value="all">All</option>
-    </select>
+    <label>Report:</label>
+    <input v-model="reportlooked" placeholder="incomes/expenses/all" />
+    <div v-if="reportlooked === 'incomes'">
+      <label>Choose a Date:</label>
+      <select v-model="datelooked">
+        <option :key="item.name" v-for="item in incomeList">{{
+          item.date
+        }}</option>
+        <option value="all">All</option>
+      </select>
+    </div>
+    <div v-else-if="reportlooked === 'expenses'">
+      <label>Choose a Date:</label>
+      <select v-model="datelooked">
+        <option :key="item.name" v-for="item in expenseList">{{
+          item.date
+        }}</option>
+        <option value="all">All</option>
+      </select>
+    </div>
+    <div v-else-if="reportlooked === 'all'">
+      <label>Choose a Date:</label>
+      <select v-model="datelooked">
+        <option :key="item.name" v-for="item in expenseIncomeList">{{
+          item.date
+        }}</option>
+        <option value="all">All</option>
+      </select>
+    </div>
     <br />
     <br />
     <table id="table" border="1">
@@ -59,7 +81,8 @@ export default {
     return {
       account: "",
       datelooked: "",
-      categorylooked: ""
+      categorylooked: "",
+      reportlooked: ""
     };
   },
   computed: {
@@ -88,12 +111,29 @@ export default {
     },
     filteredList() {
       console.log(this.categorylooked + "---" + this.datelooked);
-      const listByCategory =
-        this.categorylooked === ""
-          ? this.expenseIncomeList
-          : this.expenseIncomeList.filter(
-              item => item.category === this.categorylooked
-            );
+      var listByCategory;
+      if (this.reportlooked === "incomes") {
+        listByCategory =
+          this.categorylooked === ""
+            ? this.incomeList
+            : this.incomeList.filter(
+                item => item.category === this.categorylooked
+              );
+      } else if (this.reportlooked === "expenses") {
+        listByCategory =
+          this.categorylooked === ""
+            ? this.expenseList
+            : this.expenseList.filter(
+                item => item.category === this.categorylooked
+              );
+      } else {
+        listByCategory =
+          this.categorylooked === ""
+            ? this.expenseIncomeList
+            : this.expenseIncomeList.filter(
+                item => item.category === this.categorylooked
+              );
+      }
       return this.datelooked === "" || this.datelooked === "all"
         ? listByCategory
         : listByCategory.filter(item => item.date === this.datelooked);
