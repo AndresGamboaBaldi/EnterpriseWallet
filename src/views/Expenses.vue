@@ -8,6 +8,10 @@
     <div>
       <label class="animated" id="expensesTitle">EXPENSES</label>
       <br />
+      <span id="balance" class="card"
+        ><b>Account Balance: </b>{{ account.balance }} Bs.</span
+      >
+      <br />
       <br />
       <label>Expense's Name: </label>
       <input v-model="expenseName" />
@@ -19,7 +23,6 @@
           category.name
         }}</option>
       </select>
-      <br />
       <br />
       <div v-if="expenseCategory === 'Transaction'">
         <label>Account To Transfer: </label>
@@ -230,6 +233,9 @@ export default {
 };
 </script>
 <style>
+#balance {
+  font-size: 25px;
+}
 .showndate {
   color: white;
   font-size: 30px;
