@@ -39,7 +39,7 @@
       <br />
       <br />
       <div v-if="expenseCategory === 'Transaction'">
-        <button @click="addNewTransfer" class="buttons">
+        <button id="SubmitTransfer" @click="addNewTransfer" class="buttons">
           Add new Transfer
         </button>
       </div>
