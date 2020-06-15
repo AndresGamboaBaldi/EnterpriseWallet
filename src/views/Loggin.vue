@@ -23,7 +23,6 @@
           <p style="font-size:30px">
             <b>{{ account.account }}</b>
           </p>
-          <br />
           <p><b>Type: </b>{{ account.type }}</p>
           <p>
             <b>{{ account.balance }} Bs.</b>

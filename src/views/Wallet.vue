@@ -28,32 +28,22 @@
     <br />
     <br />
     <br />
-    <table id="table" border="1">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Category</th>
-          <th>Amount</th>
-          <th>Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr :key="item.code" v-for="item in filteredList">
-          <td :class="[item.is === 'income' ? 'green' : 'red']">
-            {{ item.name }}
-          </td>
-          <td :class="[item.is === 'income' ? 'green' : 'red']">
-            {{ item.category }}
-          </td>
-          <td :class="[item.is === 'income' ? 'green' : 'red']">
-            {{ item.amount }}
-          </td>
-          <td :class="[item.is === 'income' ? 'green' : 'red']">
-            {{ item.date }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="cardView" :key="item.code" v-for="item in filteredList">
+      <div :class="[item.is === 'income' ? 'green' : 'red']">
+        <span
+          ><p><b>Name: </b>{{ item.name }}</p></span
+        >
+        <span
+          ><p><b>Category: </b>{{ item.category }}</p></span
+        >
+        <span
+          ><p><b>Amount: </b>{{ item.amount }} Bs.</p></span
+        >
+        <span
+          ><p><b>Date: </b>{{ item.date }}</p></span
+        >
+      </div>
+    </div>
   </div>
 </template>
 
@@ -122,15 +112,44 @@ export default {
 };
 </script>
 <style scoped>
+.cardView {
+  /* Add shadows to create the "card" effect */
+  box-shadow: 0 10px 20px 0 rgba(253, 250, 250, 0.493);
+  transition: 0.3s;
+  background-color: #ffff;
+  color: rgba(0, 0, 0, 0.726);
+  margin-left: 30%;
+  margin-right: 30%;
+  width: auto;
+  height: 100px;
+  border-radius: 20px;
+  font-size: 20px;
+  text-align: center;
+  line-height: 3px;
+  margin-top: 30px;
+  font-family: "Arial";
+}
 .red {
   background: rgb(248, 117, 100);
+  padding: 10px;
+  border-radius: 20px;
+  width: auto;
+  height: 100px;
 }
 .green {
-  background: rgb(51, 228, 89);
+  background: rgb(49, 214, 85);
+  padding: 10px;
+  border-radius: 20px;
+  width: auto;
+  height: 100px;
 }
 .balance {
   color: #fff;
   font-size: 30px;
   font-style: bold;
+}
+/* On mouse-over, add a deeper shadow */
+.cardView:hover {
+  box-shadow: 0 8px 16px 0 rgba(193, 207, 170, 0.2);
 }
 </style>

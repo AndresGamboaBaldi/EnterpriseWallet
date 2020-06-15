@@ -35,7 +35,7 @@
     </div>
     <br />
     <br />
-    <div class="incomeTable">
+    <div v-if="incomeList.length > 0" class="incomeTable">
       <table>
         <thead>
           <tr>
