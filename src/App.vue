@@ -58,10 +58,42 @@ button {
   border-radius: 15px;
   border: 6px double rgba(15, 10, 93, 0.322);
 }
-.accountList {
-  color: #fff;
+.card {
+  /* Add shadows to create the "card" effect */
+  box-shadow: 0 4px 8px 0 rgba(253, 250, 250, 0.548);
+  transition: 0.3s;
+  background-color: #ffff;
+  color: rgba(0, 0, 0, 0.794);
+  padding: 10px;
+  margin-top: 20px;
+  margin-left: 500px;
+  margin-right: 500px;
+  width: auto;
+  height: auto;
+  border-radius: 20px;
   font-size: 40px;
-  text-align: center;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+.imageContainer {
+  display: inline-block;
+}
+.logo {
+  display: inline-block;
+  width: 50%;
+  height: auto;
+  padding-right: 20%;
+}
+.textContainer {
+  display: inline-block;
+  font-size: 20px;
+  width: auto;
+  text-align: right;
+  line-height: 7px;
+  padding-right: 3px;
 }
 input,
 select {
@@ -108,15 +140,16 @@ th.active .arrow {
   margin-left: 5px;
   opacity: 0.66;
 }
+
 .animated {
-  font: 700 4em/1 "Oswald", sans-serif;
-  font-size: 40px;
+  font: 600 4em/1 "Oswald", sans-serif;
   text-align: center;
+  font-style: bold;
   letter-spacing: 0;
   padding: 0.65em 0 0.325em;
   display: inline-flex;
-  margin: 20 auto;
-  padding-top: 100px;
+  margin: 10 auto;
+  padding-top: 60px;
   text-shadow: 0 0 80px rgba(255, 255, 255, 0.5);
 
   /*Clip Background Image */

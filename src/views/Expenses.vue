@@ -1,7 +1,6 @@
 <template>
   <div id="expenses" class="main-container">
     <div>
-      <br />
       <label class="animated" id="expensesTitle">EXPENSES</label>
       <br />
       <br />

@@ -1,8 +1,10 @@
 <template>
   <div id="WalletView" class="container">
-    <h1 class="animated"> ACCOUNT: {{ obj.account }}</h1>
+    <h1 class="animated">ACCOUNT: {{ obj.account }}</h1>
     <br />
-    <span class="balance">BALANCE: {{ obj.balance }} Bs.</span>
+    <span class="card"><b>Balance: </b>{{ obj.balance }} Bs.</span>
+    <br />
+    <br />
     <br />
     <br />
     <label>New account's name: </label>

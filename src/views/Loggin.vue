@@ -1,7 +1,11 @@
 <template>
   <div class="home">
     <br />
-    <HelloWorld class="animated" msg="Welcome to your Enterprise Wallet " />
+    <HelloWorld
+      class="animated"
+      style="font-size: 40px"
+      msg="Welcome to IWallet "
+    />
     <br />
     <label>Account's name: </label>
     <input v-model="account" placeholder="Choose Account" />
@@ -10,12 +14,22 @@
     <button @click="validateContext()">CHOOSE</button>
     <br />
     <br />
-    <div class="accountList" :key="index" v-for="(account, index) in accounts">
-      <ul>
-        <li>
-          {{ account.account }}
-        </li>
-      </ul>
+    <div class="card" :key="index" v-for="(account, index) in accounts">
+      <div class="imageContainer">
+        <img class="logo" src="../assets/money.png" />
+      </div>
+      <div class="textContainer">
+        <span>
+          <p style="font-size:30px">
+            <b>{{ account.account }}</b>
+          </p>
+          <br />
+          <p><b>Type: </b>{{ account.type }}</p>
+          <p>
+            <b>{{ account.balance }} Bs.</b>
+          </p>
+        </span>
+      </div>
     </div>
   </div>
 </template>
