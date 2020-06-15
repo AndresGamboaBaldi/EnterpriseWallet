@@ -3,10 +3,7 @@
     <div id="nav">
       <router-link to="/">Loggin </router-link> |
       <router-link to="/register">Register </router-link> |
-      <router-link to="/wallet">Wallet </router-link> |
-      <router-link to="/Categories">Categories </router-link> |
-      <router-link to="/Income">Incomes </router-link> |
-      <router-link to="/expenses">Expenses </router-link>
+      <router-link to="/wallet">Wallet </router-link>
     </div>
     <br />
     <router-view />
@@ -26,10 +23,11 @@
 }
 
 #nav {
-  position: absolute;
+  position: left;
   top: 0;
   right: 0;
-  padding: 30px;
+  padding: 20px;
+  height: 5px;
 }
 
 #nav a {
@@ -38,6 +36,22 @@
 }
 
 #nav a.router-link-exact-active {
+  color: rgb(194, 146, 34);
+}
+#nav2 {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 20px;
+  height: 5px;
+}
+
+#nav2 a {
+  font-weight: bold;
+  color: white;
+}
+
+#nav2 a.router-link-exact-active {
   color: rgb(194, 146, 34);
 }
 label {

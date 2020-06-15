@@ -1,5 +1,10 @@
 <template>
   <div id="WalletView" class="container">
+    <div id="nav2">
+      <router-link to="/Categories">Categories </router-link> |
+      <router-link to="/Income">Incomes </router-link> |
+      <router-link to="/expenses">Expenses </router-link>
+    </div>
     <h1 class="animated">ACCOUNT: {{ obj.account }}</h1>
     <br />
     <span class="card"><b>Balance: </b>{{ obj.balance }} Bs.</span>

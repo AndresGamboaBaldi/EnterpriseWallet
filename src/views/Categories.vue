@@ -1,6 +1,10 @@
 <template>
   <div>
-    <br />
+    <div id="nav2">
+      <router-link to="/Categories">Categories </router-link> |
+      <router-link to="/Income">Incomes </router-link> |
+      <router-link to="/expenses">Expenses </router-link>
+    </div>
     <label class="animated">CATEGORIES</label>
     <br />
     <br />

@@ -33,7 +33,7 @@ export default {
     ...mapActions(["addAccount"]),
     validateContext() {
       this.newAccount === "" || this.newType === ""
-        ? alert("Must put a User Name or Type")
+        ? alert("Must put an Account Name or Type")
         : this.submitAccount();
     },
     submitAccount() {

@@ -1,5 +1,10 @@
 <template>
   <div id="expenses" class="main-container">
+    <div id="nav2">
+      <router-link to="/Categories">Categories </router-link> |
+      <router-link to="/Income">Incomes </router-link> |
+      <router-link to="/expenses">Expenses </router-link>
+    </div>
     <div>
       <label class="animated" id="expensesTitle">EXPENSES</label>
       <br />
@@ -208,7 +213,6 @@ export default {
   font-size: 30px;
 }
 .main-container {
-  background: black;
   width: 100%;
   height: 1500px;
   font-size: medium;

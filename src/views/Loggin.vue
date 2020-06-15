@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <br />
     <HelloWorld
       class="animated"
       style="font-size: 40px"
@@ -59,13 +58,14 @@ export default {
     validateContext() {
       this.accounts.find(element => element.account === this.account)
         ? this.selectedAccount()
-        : alert("The user name doesn't exist");
+        : alert("This account doesn't exist");
     },
     selectedAccount() {
       const findAccount = this.accounts.find(
         element => element.account === this.account
       );
       this.chooseAccount(findAccount);
+      alert("Logged into " + findAccount.account.toUpperCase());
     }
   }
 };
