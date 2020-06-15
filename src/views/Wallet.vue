@@ -1,6 +1,6 @@
 <template>
   <div id="WalletView" class="container">
-    <h1 class="animated"> ACCOUNT: {{ obj.account }}</h1>
+    <h1 class="animated">ACCOUNT: {{ obj.account }}</h1>
     <br />
     <span class="balance">BALANCE: {{ obj.balance }} Bs.</span>
     <br />
@@ -9,8 +9,8 @@
     <input v-model="account" placeholder="" />
     <br />
     <br />
-    <button @click="changeNameAccount()"> CHANGE NAME</button>
-    <button @click="viewdeleteAccount()"> Delete Account</button>
+    <button @click="changeNameAccount()">CHANGE NAME</button>
+    <button @click="viewdeleteAccount()">Delete Account</button>
     <br />
     <br />
     <label>Choose a Category: </label>

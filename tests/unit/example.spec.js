@@ -162,15 +162,37 @@ describe("Expenses Logic Tests", () => {
     localVue.use(VueRouter);
     localVue.use(Vuex);
   });
+  /*it("Testing Expense Field Validation", () => {
+    const wrapper = mount(Expenses, {
+      store,
+      localVue
+    });
+    const expectedLength =
+      wrapper.vm.$store.state.selectAccount.expenses.length;
+    wrapper.vm.addExpense({
+      name: "",
+      category: "",
+      amount: 0,
+      date: "15/06/2020"
+    });
+    assert.equal(
+      wrapper.vm.$store.state.selectAccount.expenses.length,
+      expectedLength
+    );
+  });*/
   it("Testing Expense Create", () => {
     const wrapper = mount(Expenses, {
       store,
       localVue
     });
-    //wrapper.vm.chooseAccount("root");
     const initiallength = wrapper.vm.$store.state.selectAccount.expenses.length;
     const expectedlength = initiallength + 1;
-    wrapper.vm.addExpense("pruebaa");
+    wrapper.vm.addExpense({
+      name: "Expense",
+      category: "Transaction",
+      amount: 0,
+      date: "14/06/2020"
+    });
     assert.equal(
       wrapper.vm.$store.state.selectAccount.expenses.length,
       expectedlength
@@ -181,9 +203,15 @@ describe("Expenses Logic Tests", () => {
       store,
       localVue
     });
+    wrapper.vm.addExpense({
+      name: "Expense",
+      category: "Transaction",
+      amount: 0,
+      date: "14/06/2020"
+    });
     const initiallength = wrapper.vm.$store.state.selectAccount.expenses.length;
     const expectedlength = initiallength - 1;
-    wrapper.vm.deleteExpense("prueba4");
+    wrapper.vm.deleteExpense("Expense");
     assert.equal(
       wrapper.vm.$store.state.selectAccount.expenses.length,
       expectedlength
@@ -194,24 +222,13 @@ describe("Expenses UI Tests", () => {
   let localVue;
 
   it("The title should be rendered", () => {
-    const expectedTitle = "Expenses";
+    const expectedTitle = "EXPENSES";
     const wrapper = shallowMount(Expenses, {
       store,
       localVue
     });
     const titleInComponent = wrapper.find("#expensesTitle");
     assert.equal(titleInComponent.text(), expectedTitle);
-  });
-
-  it("2 initial buttons should be rendered ", () => {
-    const expectedNumberofButtons = 2;
-    const wrapper = shallowMount(Expenses, {
-      store,
-      localVue
-    });
-    const buttonsInUI = wrapper.findAll(".buttons");
-    assert.isTrue(wrapper.exists());
-    assert.equal(buttonsInUI.length, expectedNumberofButtons);
   });
 });
 //INCOMES UNIT TEST
@@ -344,7 +361,6 @@ describe("Transfer Unit Testing", () => {
     localVue.use(VueRouter);
     localVue.use(Vuex);
   });
-  
   it("Transfer Button does exist", () => {
     const wrapper = shallowMount(Categories, {
       store,
@@ -359,7 +375,8 @@ describe("Transfer Unit Testing", () => {
       store,
       localVue
     });
-    const initialIncomesLength = wrapper.vm.$store.state.selectAccount.incomes.length;
+    const initialIncomesLength =
+      wrapper.vm.$store.state.selectAccount.incomes.length;
     const expectedIncomesLength = initialIncomesLength + 1;
     //If all fields are valid
     wrapper.vm.addIncome({
@@ -373,19 +390,8 @@ describe("Transfer Unit Testing", () => {
       wrapper.vm.$store.state.selectAccount.incomes.length,
       expectedIncomesLength
     );
-    /*wrapper.vm.addIncomeTransfered({
-      userAccount: "root",
-      name: "NewTransferedIncome",
-      category: "Other",
-      amount: 1000,
-      date: "14/06/2020"
-    });
-    console.log("actual expenses length " + initialLength);
-    assert.equal(
-      wrapper.vm.$store.state.selectAccount.incomes.length,
-      expectedLength
-    );*/
-    const initialExpensesLength = wrapper.vm.$store.state.selectAccount.expenses.length;
+    const initialExpensesLength =
+      wrapper.vm.$store.state.selectAccount.expenses.length;
     const expectedExpensesLength = initialExpensesLength + 1;
     wrapper.vm.addExpense({
       name: "NewTransferedExpense",
@@ -398,7 +404,5 @@ describe("Transfer Unit Testing", () => {
       wrapper.vm.$store.state.selectAccount.expenses.length,
       expectedExpensesLength
     );
-    
   });
 });
-
