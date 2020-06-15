@@ -1,14 +1,16 @@
 <template>
   <div class="home">
-    <HelloWorld msg="Welcome to My Enterprise Wallet " />
     <br />
+    <HelloWorld class="animated" msg="Welcome to your Enterprise Wallet " />
+    <br />
+    <label>Account's name: </label>
     <input v-model="account" placeholder="Choose Account" />
     <br />
     <br />
     <button @click="validateContext()">CHOOSE</button>
     <br />
     <br />
-    <div :key="index" v-for="(account, index) in accounts">
+    <div class="accountList" :key="index" v-for="(account, index) in accounts">
       <ul>
         <li>
           {{ account.account }}

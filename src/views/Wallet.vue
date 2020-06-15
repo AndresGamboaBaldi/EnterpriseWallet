@@ -1,24 +1,29 @@
 <template>
   <div id="WalletView" class="container">
-    <h1>Welcome to your WALLET --- {{ obj.account }}</h1>
+    <h1 class="animated"> ACCOUNT: {{ obj.account }}</h1>
+    <br />
+    <span class="balance">BALANCE: {{ obj.balance }} Bs.</span>
     <br />
     <br />
+    <label>New account's name: </label>
     <input v-model="account" placeholder="" />
     <br />
     <br />
-    <button @click="changeNameAccount()">CHANGE NAME</button>
-    <button @click="viewdeleteAccount()">Delete Account</button>
+    <button @click="changeNameAccount()"> CHANGE NAME</button>
+    <button @click="viewdeleteAccount()"> Delete Account</button>
     <br />
     <br />
-    <label>Choose a Category:</label>
+    <label>Choose a Category: </label>
     <input v-model="categorylooked" placeholder="Category" />
-    <label>Choose a Date:</label>
+    <br />
+    <label>Choose a Date: </label>
     <select v-model="datelooked">
       <option :key="item.name" v-for="item in expenseIncomeList">{{
         item.date
       }}</option>
       <option value="all">All</option>
     </select>
+    <br />
     <br />
     <br />
     <table id="table" border="1">
@@ -121,45 +126,9 @@ export default {
 .green {
   background: rgb(51, 228, 89);
 }
-table {
-  border: 2px solid #194e70;
-  border-radius: 3px;
-  background-color: rgb(224, 212, 212);
-  margin-left: 300px;
-}
-
-th {
-  background-color: #195770;
-  color: rgba(255, 255, 255, 0.66);
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-td {
-  background-color: #f9f9f9;
-  color: #000;
-}
-
-th,
-td {
-  min-width: 120px;
-  padding: 10px 20px;
-}
-th.active {
-  color: #000;
-}
-th.active .arrow {
-  opacity: 1;
-}
-.arrow {
-  display: inline-block;
-  vertical-align: middle;
-  width: 0;
-  height: 0;
-  margin-left: 5px;
-  opacity: 0.66;
+.balance {
+  color: #fff;
+  font-size: 30px;
+  font-style: bold;
 }
 </style>

@@ -1,7 +1,8 @@
 <template>
   <div class="about">
-    <h1>Create new Account</h1>
+    <h1 class="animated">Create new Account</h1>
     <br />
+    <label>New account: </label>
     <input v-model="newAccount" placeholder="New User" />
     <br />
     <br />

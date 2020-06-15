@@ -116,7 +116,7 @@ export default {
           this.addIncome({
             name: this.incomeName,
             category: this.incomeCategory,
-            amount: this.incomeAmount,
+            amount: Number(this.incomeAmount),
             date: this.incomeDate,
             is: "income"
           });
@@ -144,7 +144,7 @@ export default {
         this.updateIncome({
           name: this.nameLabel,
           category: this.incomeCategory,
-          amount: this.incomeAmount,
+          amount: Number(this.incomeAmount),
           date: this.incomeDate,
           is: "income"
         });
@@ -182,7 +182,6 @@ export default {
   }
 };
 </script>
-
 <style scoped>
 .main-container {
   background-color: #000;
@@ -190,50 +189,6 @@ export default {
   font-style: bold;
   width: 100%;
   height: 1500px;
-}
-input,
-select {
-  font-size: 20px;
-  text-align: center;
-}
-table {
-  font: "Oswald", sans-serif;
-  border: 2px solid #bea42f;
-  border-radius: 3px;
-  background-color: rgb(224, 212, 212);
-  margin-left: 230px;
-}
-th {
-  background-color: #a07d2b;
-  color: rgba(255, 255, 255, 0.66);
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-td {
-  background-color: #f9f9f9;
-  color: #000;
-}
-th,
-td {
-  min-width: 120px;
-  padding: 10px 20px;
-}
-th.active {
-  color: #000;
-}
-th.active .arrow {
-  opacity: 1;
-}
-.arrow {
-  display: inline-block;
-  vertical-align: middle;
-  width: 0;
-  height: 0;
-  margin-left: 5px;
-  opacity: 0.66;
 }
 .nameLabel,
 .dateLabel {

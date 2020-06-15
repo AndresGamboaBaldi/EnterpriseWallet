@@ -1,6 +1,7 @@
 <template>
   <div>
     <br />
+    <label class="animated">CATEGORIES</label>
     <br />
     <br />
     <div id="IncomeInterface" class="cred">

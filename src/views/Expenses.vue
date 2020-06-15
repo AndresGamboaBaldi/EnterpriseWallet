@@ -2,10 +2,7 @@
   <div id="expenses" class="main-container">
     <div>
       <br />
-      <br />
-      <label id="expensesTitle">Expenses</label>
-      <br />
-      <br />
+      <label class="animated" id="expensesTitle">EXPENSES</label>
       <br />
       <br />
       <label>Expense's Name: </label>
@@ -39,7 +36,7 @@
       <br />
       <br />
       <div v-if="expenseCategory === 'Transaction'">
-        <button id="SubmitTransfer" @click="addNewTransfer" class="buttons">
+        <button @click="addNewTransfer" class="buttons">
           Add new Transfer
         </button>
       </div>
@@ -95,6 +92,7 @@ export default {
   computed: {
     ...mapGetters(["getCategoryList"]),
     ...mapGetters(["getAccounts"]),
+    ...mapGetters(["getAccount"]),
     ...mapGetters(["getExpenseList"]),
     expenseDate() {
       var date = new Date();
@@ -110,6 +108,9 @@ export default {
     },
     accounts() {
       return this.getAccounts;
+    },
+    account() {
+      return this.getAccount;
     }
   },
   methods: {
@@ -119,33 +120,49 @@ export default {
     ...mapActions(["deleteExpense"]),
     ...mapActions(["addIncomeTransfered"]),
     addNewTransfer() {
-      this.addExpense({
-        name: this.expenseName,
-        category: this.expenseCategory,
-        amount: this.expenseAmount,
-        date: this.expenseDate,
-        is: "expense"
-      });
-      this.addIncomeTransfered({
-        userAccount: this.transferUser,
-        name: this.expenseName,
-        category: this.expenseCategory,
-        amount: this.expenseAmount,
-        date: this.expenseDate,
-        is: "income"
-      });
-      this.clearBoxes();
-    },
-    addNewExpense() {
-      if (this.validateFields()) {
+      if (this.account.balance >= this.expenseAmount) {
         this.addExpense({
           name: this.expenseName,
           category: this.expenseCategory,
-          amount: this.expenseAmount,
+          amount: Number(this.expenseAmount),
           date: this.expenseDate,
           is: "expense"
         });
+        this.addIncomeTransfered({
+          userAccount: this.transferUser,
+          name: this.expenseName,
+          category: this.expenseCategory,
+          amount: Number(this.expenseAmount),
+          date: this.expenseDate,
+          is: "income"
+        });
         this.clearBoxes();
+      } else {
+        alert(
+          "Balance:" +
+            this.account.balance +
+            " Bs.\nYou don't have enough  money."
+        );
+      }
+    },
+    addNewExpense() {
+      if (this.validateFields()) {
+        if (this.account.balance >= this.expenseAmount) {
+          this.addExpense({
+            name: this.expenseName,
+            category: this.expenseCategory,
+            amount: Number(this.expenseAmount),
+            date: this.expenseDate,
+            is: "expense"
+          });
+          this.clearBoxes();
+        } else {
+          alert(
+            "Balance:" +
+              this.account.balance +
+              " Bs.\nYou don't have enough  money."
+          );
+        }
       } else {
         alert("Error Ocurred, Verify input fields");
       }
@@ -155,7 +172,7 @@ export default {
         this.updateExpense({
           name: this.expenseName,
           category: this.expenseCategory,
-          amount: this.expenseAmount,
+          amount: Number(this.expenseAmount),
           date: this.expenseDate,
           is: "expense"
         });
@@ -199,15 +216,11 @@ export default {
   color: white;
   font-size: 30px;
 }
-html {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
 .main-container {
   background: black;
   width: 100%;
   height: 1500px;
   font-size: medium;
+  font-style: bold;
 }
 </style>

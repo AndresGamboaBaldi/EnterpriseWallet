@@ -18,9 +18,11 @@
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: rgb(15, 15, 15);
   text-align: center;
+  background: rgb(15, 15, 15);
   color: rgb(194, 146, 34);
+  width: 100%;
+  height: 1500px;
 }
 
 #nav {
@@ -56,31 +58,40 @@ button {
   border-radius: 15px;
   border: 6px double rgba(15, 10, 93, 0.322);
 }
+.accountList {
+  color: #fff;
+  font-size: 40px;
+  text-align: center;
+}
+input,
+select {
+  font-size: 20px;
+  text-align: center;
+}
 table {
-  border: 2px solid rgba(0, 0, 0);
-  background-color: rgba(0, 0, 0);
+  font: "Oswald", sans-serif;
+  border: 2px solid #bea42f;
+  border-radius: 3px;
+  background-color: rgb(224, 212, 212);
+  margin-left: auto;
+  margin-right: auto;
 }
 th {
-  background-color: rgb(194, 146, 34);
-  color: white;
+  background-color: #a07d2b;
+  color: rgba(255, 255, 255, 0.66);
   cursor: pointer;
-  font-weight: 600;
-  font-size: medium;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
 }
-tbody td:nth-child(even) {
-  background-color: rgb(245, 213, 139);
-}
 td {
-  background-color: white;
-  color: rgba(0, 0, 0);
+  background-color: #f9f9f9;
+  color: #000;
 }
 th,
 td {
-  min-width: 525px;
+  min-width: 120px;
   padding: 10px 20px;
 }
 th.active {
@@ -96,5 +107,38 @@ th.active .arrow {
   height: 0;
   margin-left: 5px;
   opacity: 0.66;
+}
+.animated {
+  font: 700 4em/1 "Oswald", sans-serif;
+  font-size: 40px;
+  text-align: center;
+  letter-spacing: 0;
+  padding: 0.65em 0 0.325em;
+  display: inline-flex;
+  margin: 20 auto;
+  padding-top: 100px;
+  text-shadow: 0 0 80px rgba(255, 255, 255, 0.5);
+
+  /*Clip Background Image */
+  background: url(http://f.cl.ly/items/010q3E1u3p2Q0j1L1S1o/animated_text_fill.png)
+    repeat-y;
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  /* Animate Background Image */
+  -webkit-text-fill-color: transparent;
+  animation: aitf 80s linear infinite;
+  /* Activate hardware acceleration for smoother animations */
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+/* Animate Background Image */
+@keyframes aitf {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
 }
 </style>
