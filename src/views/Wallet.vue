@@ -13,14 +13,34 @@
     <label>Choose a Category:</label>
     <input v-model="categorylooked" placeholder="Category" />
     <label>Report:</label>
-    <input v-model="reportlooked" placeholder="incomes/expenses" />
-    <label>Choose a Date:</label>
-    <select v-model="datelooked">
-      <option :key="item.name" v-for="item in expenseIncomeList">{{
-        item.date
-      }}</option>
-      <option value="all">All</option>
-    </select>
+    <input v-model="reportlooked" placeholder="incomes/expenses/all" />
+    <div v-if="reportlooked === 'incomes'">
+      <label>Choose a Date:</label>
+      <select v-model="datelooked">
+        <option :key="item.name" v-for="item in incomeList">{{
+          item.date
+        }}</option>
+        <option value="all">All</option>
+      </select>
+    </div>
+    <div v-else-if="reportlooked === 'expenses'">
+      <label>Choose a Date:</label>
+      <select v-model="datelooked">
+        <option :key="item.name" v-for="item in expenseList">{{
+          item.date
+        }}</option>
+        <option value="all">All</option>
+      </select>
+    </div>
+    <div v-else-if="reportlooked === 'all'">
+      <label>Choose a Date:</label>
+      <select v-model="datelooked">
+        <option :key="item.name" v-for="item in expenseIncomeList">{{
+          item.date
+        }}</option>
+        <option value="all">All</option>
+      </select>
+    </div>
     <br />
     <br />
     <table id="table" border="1">
@@ -61,7 +81,8 @@ export default {
     return {
       account: "",
       datelooked: "",
-      categorylooked: ""
+      categorylooked: "",
+      reportlooked: ""
     };
   },
   computed: {
@@ -103,6 +124,13 @@ export default {
           this.categorylooked === ""
             ? this.expenseList
             : this.expenseList.filter(
+                item => item.category === this.categorylooked
+              );
+      } else {
+        listByCategory =
+          this.categorylooked === ""
+            ? this.expenseIncomeList
+            : this.expenseIncomeList.filter(
                 item => item.category === this.categorylooked
               );
       }
