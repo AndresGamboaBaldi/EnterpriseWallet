@@ -57,16 +57,9 @@
     <div class="cardView" :key="item.code" v-for="item in filteredList">
       <div :class="[item.is === 'income' ? 'green' : 'red']">
         <span
-          ><p><b>Name: </b>{{ item.name }}</p></span
-        >
-        <span
-          ><p><b>Category: </b>{{ item.category }}</p></span
-        >
-        <span
-          ><p><b>Amount: </b>{{ item.amount }} Bs.</p></span
-        >
-        <span
-          ><p><b>Date: </b>{{ item.date }}</p></span
+          ><b>Name: </b>{{ item.name }} <b> Category: </b>{{ item.category }}
+          <b> Amount: </b>{{ item.amount }} Bs. <b> Date: </b
+          >{{ item.date }}</span
         >
       </div>
     </div>
@@ -165,11 +158,11 @@ export default {
   margin-left: 30%;
   margin-right: 30%;
   width: auto;
-  height: 100px;
+  height: 20px;
   border-radius: 20px;
-  font-size: 20px;
+  font-size: 22px;
   text-align: center;
-  line-height: 3px;
+  line-height: 20px;
   margin-top: 30px;
   font-family: "Arial";
 }
@@ -178,14 +171,14 @@ export default {
   padding: 10px;
   border-radius: 20px;
   width: auto;
-  height: 100px;
+  height: 20px;
 }
 .green {
   background: rgb(49, 214, 85);
   padding: 10px;
   border-radius: 20px;
   width: auto;
-  height: 100px;
+  height: 20px;
 }
 .balance {
   color: #fff;
