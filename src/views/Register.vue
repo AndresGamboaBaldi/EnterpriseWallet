@@ -40,6 +40,7 @@ export default {
       this.addAccount({
         account: this.newAccount,
         type: this.newType,
+        balance: 0,
         incomes: [],
         expenses: []
       });

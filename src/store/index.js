@@ -217,7 +217,6 @@ export default new Vuex.Store({
           account.incomes.push(newIncome);
           var balance = Number(account.balance);
           account.balance = balance + Number(newIncome.amount);
-          alert(account.balance);
         }
       });
     },
