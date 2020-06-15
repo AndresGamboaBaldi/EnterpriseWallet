@@ -190,21 +190,13 @@ export default {
       this.expenseAmount = 0;
     },
     validateFields() {
-      if (
-        this.isEmptyString(this.expenseName) ||
-        this.isEmptyString(this.expenseCategory) ||
-        Number.isFinite(this.expenseAmount)
-      ) {
+      var name = this.expenseName;
+      var category = this.expenseCategory;
+      var amount = this.expenseAmount;
+      if (name === "" || name === null || category === "" || amount <= 0) {
         return false;
       } else {
         return true;
-      }
-    },
-    isEmptyString(string) {
-      if (string === "") {
-        return true;
-      } else {
-        return false;
       }
     }
   }

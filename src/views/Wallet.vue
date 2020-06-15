@@ -11,8 +11,8 @@
     <input v-model="account" placeholder="" />
     <br />
     <br />
-    <button @click="changeNameAccount()"> CHANGE NAME</button>
-    <button @click="viewdeleteAccount()"> Delete Account</button>
+    <button @click="changeNameAccount()">CHANGE NAME</button>
+    <button @click="viewdeleteAccount()">Delete Account</button>
     <br />
     <br />
     <label>Choose a Category: </label>
