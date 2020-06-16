@@ -10,11 +10,73 @@ import store from "@/store";
 import VueRouter from "vue-router";
 import Vuex from "vuex";
 
+describe("Transfer Unit Testing", () => {
+  let localVue;
+  let router;
+  beforeEach(() => {
+    localVue = createLocalVue();
+    localVue.use(VueRouter);
+    router = new VueRouter({ routes: [] });
+    localVue.use(Vuex);
+  });
+  it("Transfer Button does exist", () => {
+    const wrapper = shallowMount(Expenses, {
+      store,
+      router,
+      localVue
+    });
+    let buttonName = "SubmitTransfer";
+    assert.exists(wrapper.find(buttonName));
+  });
+  it("Adding new Transfer works correctly", async () => {
+    global.alert = message => {
+      console.log(message);
+    };
+    const wrapper = mount(Expenses, {
+      store,
+      router,
+      localVue
+    });
+    await wrapper.vm.$store.dispatch("addAccount", {
+      account: "root2",
+      type: "credit",
+      balance: 1000,
+      incomes: [],
+      expenses: []
+    });
+    await wrapper.vm.$store.dispatch("addAccount", {
+      account: "root3",
+      type: "credit",
+      balance: 1,
+      incomes: [],
+      expenses: []
+    });
+    await wrapper.vm.$store.dispatch("chooseAccount", {
+      account: "root2",
+      type: "credit",
+      balance: 1000,
+      incomes: [],
+      expenses: []
+    });
+    const initialExpensesLength =
+      wrapper.vm.$store.state.selectAccount.expenses.length;
+    const expectedExpensesLength = initialExpensesLength + 1;
+
+    wrapper.vm.$data.transferUser = "root3";
+    wrapper.vm.$data.expenseName = "NewTransferedIncome";
+    wrapper.vm.$data.expenseCategory = "Other";
+    wrapper.vm.$data.expenseAmount = 100;
+    wrapper.vm.addNewTransfer();
+    assert.equal(
+      wrapper.vm.$store.state.selectAccount.expenses.length,
+      expectedExpensesLength
+    );
+  });
+});
 //CATEGORIES UNIT TEST
 describe("Income Category List ", () => {
   let localVue;
   let router;
-
   beforeEach(() => {
     localVue = createLocalVue();
     localVue.use(VueRouter);
@@ -131,15 +193,18 @@ describe("Wallet Unit Test ", () => {
     assert.exists(wrapper.find(DivName));
   });
   it("Delete Account Works", () => {
+    global.alert = message => {
+      console.log(message);
+    };
     const wrapper = shallowMount(Wallet, {
       store,
       router,
       localVue
     });
+    let expectedInitialLength = wrapper.vm.$store.state.accounts.length;
     wrapper.vm.deleteAccount("root");
-    let expectedInitialLength = 0;
     assert.equal(
-      expectedInitialLength,
+      expectedInitialLength - 1,
       wrapper.vm.$store.state.accounts.length
     );
   });
@@ -164,10 +229,10 @@ describe("Register Unit Test ", () => {
       router,
       localVue
     });
+    let expectedInitialLength = wrapper.vm.$store.state.accounts.length;
     wrapper.vm.addAccount({ name: "added" });
-    let expectedInitialLength = 1;
     assert.equal(
-      expectedInitialLength,
+      expectedInitialLength + 1,
       wrapper.vm.$store.state.accounts.length
     );
   });
@@ -416,63 +481,6 @@ describe("CRUD methods in Income View", () => {
     assert.equal(
       wrapper.vm.$store.state.selectAccount.incomes.length,
       expectedLength
-    );
-  });
-});
-
-describe("Transfer Unit Testing", () => {
-  let localVue;
-  let router;
-  beforeEach(() => {
-    localVue = createLocalVue();
-    localVue.use(VueRouter);
-    router = new VueRouter({ routes: [] });
-    localVue.use(Vuex);
-  });
-  it("Transfer Button does exist", () => {
-    const wrapper = shallowMount(Categories, {
-      store,
-      router,
-      localVue
-    });
-    let buttonName = "SubmitTransfer";
-    assert.exists(wrapper.find(buttonName));
-  });
-
-  it("Adding new Transfer works correctly", () => {
-    const wrapper = mount(Expenses, {
-      store,
-      router,
-      localVue
-    });
-    const initialIncomesLength =
-      wrapper.vm.$store.state.selectAccount.incomes.length;
-    const expectedIncomesLength = initialIncomesLength + 1;
-    //If all fields are valid
-    wrapper.vm.addIncome({
-      name: "NewTransferedIncome",
-      category: "Other",
-      amount: 1000,
-      date: "14/06/2020"
-    });
-    console.log("Transfered income added");
-    assert.equal(
-      wrapper.vm.$store.state.selectAccount.incomes.length,
-      expectedIncomesLength
-    );
-    const initialExpensesLength =
-      wrapper.vm.$store.state.selectAccount.expenses.length;
-    const expectedExpensesLength = initialExpensesLength + 1;
-    wrapper.vm.addExpense({
-      name: "NewTransferedExpense",
-      category: "Other",
-      amount: 1000,
-      date: "14/06/2020"
-    });
-    console.log("Expense of transfer added");
-    assert.equal(
-      wrapper.vm.$store.state.selectAccount.expenses.length,
-      expectedExpensesLength
     );
   });
 });
