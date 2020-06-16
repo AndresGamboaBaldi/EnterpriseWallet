@@ -152,19 +152,18 @@ export default {
 <style scoped>
 .cardView {
   /* Add shadows to create the "card" effect */
-  box-shadow: 0 10px 20px 0 rgba(253, 250, 250, 0.493);
+  box-shadow: 0 8px 10px 0 rgba(253, 250, 250, 0.493);
   transition: 0.3s;
   background-color: #ffff;
   color: rgba(0, 0, 0, 0.726);
-  margin-left: 30%;
-  margin-right: 30%;
+  margin-left: 20%;
+  margin-right: 20%;
   width: auto;
-  height: 20px;
   border-radius: 20px;
   font-size: 22px;
   text-align: center;
   line-height: 20px;
-  margin-top: 30px;
+  margin-top: 2%;
   font-family: "Arial";
 }
 .red {
@@ -172,14 +171,14 @@ export default {
   padding: 10px;
   border-radius: 20px;
   width: auto;
-  height: 20px;
+  height: auto;
 }
 .green {
   background: rgb(49, 214, 85);
   padding: 10px;
   border-radius: 20px;
   width: auto;
-  height: 20px;
+  height: auto;
 }
 .balance {
   color: #fff;

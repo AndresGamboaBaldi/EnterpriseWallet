@@ -80,8 +80,8 @@ button {
   color: rgba(0, 0, 0, 0.794);
   padding: 10px;
   margin-top: 20px;
-  margin-left: 500px;
-  margin-right: 500px;
+  margin-left: 35%;
+  margin-right: 35%;
   width: auto;
   height: auto;
   border-radius: 20px;
@@ -169,6 +169,7 @@ th.active .arrow {
   /*Clip Background Image */
   background: url(http://f.cl.ly/items/010q3E1u3p2Q0j1L1S1o/animated_text_fill.png)
     repeat-y;
+  /*background-image: url("/assets/animated_title.png"), repeat-y;*/
   -webkit-background-clip: text;
   background-clip: text;
 
