@@ -156,6 +156,9 @@ describe("Register Unit Test ", () => {
   });
   // ->
   it("Add new Account Works", () => {
+    global.alert = message => {
+      console.log(message);
+    };
     const wrapper = shallowMount(Register, {
       store,
       router,
@@ -179,26 +182,53 @@ describe("Expenses Logic Tests", () => {
     router = new VueRouter({ routes: [] });
     localVue.use(Vuex);
   });
-  /*it("Testing Expense Field Validation", () => {
+  it("Testing Expense Field Validation", async () => {
+    global.alert = message => {
+      console.log(message);
+    };
     const wrapper = mount(Expenses, {
       store,
       router,
       localVue
     });
+    await wrapper.vm.$store.dispatch("chooseAccount", {
+      account: "root",
+      type: "debit",
+      incomes: [
+        {
+          name: "prueba1",
+          category: "other",
+          amount: "15548",
+          date: "12/1/2020",
+          is: "income"
+        }
+      ],
+      expenses: [
+        {
+          name: "prueba3",
+          category: "other",
+          amount: "15548",
+          date: "12/5/2020",
+          is: "expense"
+        }
+      ]
+    });
     const expectedLength =
       wrapper.vm.$store.state.selectAccount.expenses.length;
-    wrapper.vm.addExpense({
-      name: "",
-      category: "",
-      amount: 0,
-      date: "15/06/2020"
-    });
+    wrapper.vm.$data.expenseName = "";
+    wrapper.vm.$data.expenseCategory = "";
+    wrapper.vm.$data.expenseAmount = 200;
+    wrapper.vm.$data.date = "15/06/2020";
+    wrapper.vm.addNewExpense();
     assert.equal(
       wrapper.vm.$store.state.selectAccount.expenses.length,
       expectedLength
     );
-  });*/
+  });
   it("Testing Expense Create", () => {
+    global.alert = message => {
+      console.log(message);
+    };
     const wrapper = mount(Expenses, {
       store,
       router,
