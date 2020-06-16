@@ -468,6 +468,45 @@ describe("CRUD methods in Income View", () => {
       expectedLength
     );
   });
+  it("Updating an Income works correctly", () => {
+    const wrapper = mount(Income, {
+      store,
+      router,
+      localVue
+    });
+    const expectedAmount = wrapper.vm.$store.state.selectAccount.incomes.find(
+      income => income.name === "NewIncome"
+    ).amount;
+    const expectedCategory = wrapper.vm.$store.state.selectAccount.incomes.find(
+      income => income.name === "NewIncome"
+    ).category;
+    //If all fields are valid
+    wrapper.vm.updateIncome({
+      name: "NewIncome",
+      category: "Other",
+      amount: 3000,
+      date: "14/06/2020"
+    });
+    assert.notEqual(
+      wrapper.vm.$store.state.selectAccount.incomes.find(
+        income => income.name === "NewIncome"
+      ).amount,
+      expectedAmount
+    );
+    //If all fields are valid
+    wrapper.vm.updateIncome({
+      name: "NewIncome",
+      category: "Transaction",
+      amount: 3000,
+      date: "14/06/2020"
+    });
+    assert.notEqual(
+      wrapper.vm.$store.state.selectAccount.incomes.find(
+        income => income.name === "NewIncome"
+      ).category,
+      expectedCategory
+    );
+  });
   it("Delete an Income works correctly", () => {
     const wrapper = mount(Income, {
       store,

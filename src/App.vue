@@ -38,6 +38,12 @@
 #nav a.router-link-exact-active {
   color: rgb(194, 146, 34);
 }
+
+#nav a:hover {
+  font-weight: bold;
+  color: rgb(222, 222, 222);
+}
+
 #nav2 {
   position: absolute;
   top: 0;
@@ -49,6 +55,11 @@
 #nav2 a {
   font-weight: bold;
   color: white;
+}
+
+#nav2 a:hover {
+  font-weight: bold;
+  color: rgb(222, 222, 222);
 }
 
 #nav2 a.router-link-exact-active {
@@ -72,6 +83,10 @@ button {
   border-radius: 15px;
   border: 6px double rgba(15, 10, 93, 0.322);
 }
+
+button:hover {
+  background-color: rgb(184, 137, 27);
+}
 .card {
   /* Add shadows to create the "card" effect */
   box-shadow: 0 4px 8px 0 rgba(253, 250, 250, 0.548);
@@ -80,8 +95,8 @@ button {
   color: rgba(0, 0, 0, 0.794);
   padding: 10px;
   margin-top: 20px;
-  margin-left: 500px;
-  margin-right: 500px;
+  margin-left: 30%;
+  margin-right: 30%;
   width: auto;
   height: auto;
   border-radius: 20px;
@@ -169,6 +184,7 @@ th.active .arrow {
   /*Clip Background Image */
   background: url(http://f.cl.ly/items/010q3E1u3p2Q0j1L1S1o/animated_text_fill.png)
     repeat-y;
+  /*background-image: url("/assets/animated_title.png"), repeat-y;*/
   -webkit-background-clip: text;
   background-clip: text;
 

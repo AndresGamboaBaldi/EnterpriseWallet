@@ -8,8 +8,9 @@
     <label class="animated">CATEGORIES</label>
     <br />
     <br />
+    <label class="title">Incomes</label>
     <div id="IncomeInterface" class="cred">
-      <div class="cred" style="background-color: white;">
+      <div class="cred" style="background-color: whitesmoke;">
         <div :key="category.name" v-for="category in categories.income">
           <ul>
             <li>
@@ -18,11 +19,15 @@
           </ul>
         </div>
       </div>
-      <input v-model="NewIncome" placeholder="insert new income category" />
+      <div class="inputCard">
+        <input v-model="NewIncome" placeholder="insert new income category" />
+      </div>
       <button id="SubmitIncomeCategory" @click="submitIncomeCat">
         ADD NEW INCOME CATEGORY
       </button>
     </div>
+    <br />
+    <label class="title">Expenses</label>
     <div id="ExpenseInterface" class="cred">
       <div class="cred" style="background-color: white;">
         <div :key="category.name" v-for="category in categories.expense">
@@ -33,7 +38,9 @@
           </ul>
         </div>
       </div>
-      <input v-model="NewExpense" placeholder="insert new expense category" />
+      <div class="inputCard">
+        <input v-model="NewExpense" placeholder="insert new expense category" />
+      </div>
       <button id="SubmitExpenseCategory" @click="submitExpenseCat">
         ADD NEW EXPENSE CATEGORY
       </button>
