@@ -1,7 +1,8 @@
 <template>
   <div class="about">
-    <h1>Create new Account</h1>
+    <h1 class="animated">Create new Account</h1>
     <br />
+    <label>New account: </label>
     <input v-model="newAccount" placeholder="New User" />
     <br />
     <br />
@@ -32,13 +33,14 @@ export default {
     ...mapActions(["addAccount"]),
     validateContext() {
       this.newAccount === "" || this.newType === ""
-        ? alert("Must put a User Name or Type")
+        ? alert("Must put an Account Name or Type")
         : this.submitAccount();
     },
     submitAccount() {
       this.addAccount({
         account: this.newAccount,
         type: this.newType,
+        balance: 0,
         incomes: [],
         expenses: []
       });

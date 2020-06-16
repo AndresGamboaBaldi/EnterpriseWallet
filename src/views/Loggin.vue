@@ -1,19 +1,33 @@
 <template>
   <div class="home">
-    <HelloWorld msg="Welcome to My Enterprise Wallet " />
+    <HelloWorld
+      class="animated"
+      style="font-size: 40px"
+      msg="Welcome to iWallet "
+    />
     <br />
+    <label>Account's name: </label>
     <input v-model="account" placeholder="Choose Account" />
     <br />
     <br />
     <button @click="validateContext()">CHOOSE</button>
     <br />
     <br />
-    <div :key="index" v-for="(account, index) in accounts">
-      <ul>
-        <li>
-          {{ account.account }}
-        </li>
-      </ul>
+    <div class="card" :key="index" v-for="(account, index) in accounts">
+      <div class="imageContainer">
+        <img class="logo" src="../assets/money.png" />
+      </div>
+      <div class="textContainer">
+        <span>
+          <p style="font-size:30px">
+            <b>{{ account.account }}</b>
+          </p>
+          <p><b>Type: </b>{{ account.type }}</p>
+          <p>
+            <b>{{ account.balance }} Bs.</b>
+          </p>
+        </span>
+      </div>
     </div>
   </div>
 </template>
@@ -44,13 +58,14 @@ export default {
     validateContext() {
       this.accounts.find(element => element.account === this.account)
         ? this.selectedAccount()
-        : alert("The user name doesn't exist");
+        : alert("This account doesn't exist");
     },
     selectedAccount() {
       const findAccount = this.accounts.find(
         element => element.account === this.account
       );
       this.chooseAccount(findAccount);
+      alert("Logged into " + findAccount.account.toUpperCase());
     }
   }
 };

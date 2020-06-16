@@ -9,18 +9,19 @@ export default new Vuex.Store({
       {
         account: "root",
         type: "debit",
+        balance: 2700,
         incomes: [
           {
             name: "prueba1",
-            category: "other",
-            amount: "15548",
+            category: "Other",
+            amount: 1000,
             date: "12/1/2020",
             is: "income"
           },
           {
             name: "prueba2",
-            category: "other",
-            amount: "15548",
+            category: "Other",
+            amount: 2000,
             date: "12/3/2020",
             is: "income"
           }
@@ -28,15 +29,15 @@ export default new Vuex.Store({
         expenses: [
           {
             name: "prueba3",
-            category: "other",
-            amount: "15548",
+            category: "Other",
+            amount: 100,
             date: "12/5/2020",
             is: "expense"
           },
           {
             name: "prueba4",
-            category: "other",
-            amount: "15548",
+            category: "Other",
+            amount: 200,
             date: "12/2/2020",
             is: "expense"
           }
@@ -46,6 +47,7 @@ export default new Vuex.Store({
     selectAccount: {
       account: "",
       type: "",
+      balance: 0,
       incomes: [],
       expenses: []
     },
@@ -104,6 +106,7 @@ export default new Vuex.Store({
     mutateSelectAccount(state, newSeletedAccount) {
       state.selectAccount.account = newSeletedAccount.account;
       state.selectAccount.type = newSeletedAccount.type;
+      state.selectAccount.balance = newSeletedAccount.balance;
       state.selectAccount.incomes = newSeletedAccount.incomes;
       state.selectAccount.expenses = newSeletedAccount.expenses;
     },
@@ -121,26 +124,38 @@ export default new Vuex.Store({
     //Expense
     mutateAddExpense(state, newExpense) {
       state.selectAccount.expenses.push(newExpense);
+      state.selectAccount.balance =
+        state.selectAccount.balance - newExpense.amount;
     },
     mutateUpdateExpense(state, updatedExpense) {
       var indexOfItem;
-      state.selectAccount.expenses.find(
-        expense => expense.name === updatedExpense.name
-      );
-      indexOfItem = state.selectAccount.expenses.indexOf(this.expense);
-      if (this.expense !== null) {
-        state.selectAccount.expenses.splice(indexOfItem, 1, updatedExpense);
-      }
+      var lastExpense;
+      state.selectAccount.expenses.forEach(expense => {
+        if (expense.name === updatedExpense.name) {
+          lastExpense = expense.amount;
+          indexOfItem = state.selectAccount.expenses.indexOf(expense);
+          if (indexOfItem > -1) {
+            state.selectAccount.expenses.splice(indexOfItem, 1, updatedExpense);
+            state.selectAccount.balance =
+              state.selectAccount.balance +
+              Number(lastExpense) -
+              Number(updatedExpense.amount);
+          }
+        }
+      });
     },
     mutateDeleteExpense(state, expenseToDelete) {
       var indexOfItem;
-      state.selectAccount.expenses.find(
-        expense => expense.name === expenseToDelete
-      );
-      indexOfItem = state.selectAccount.expenses.indexOf(this.expense);
-      if (this.expense !== null) {
-        state.selectAccount.expenses.splice(indexOfItem, 1);
-      }
+      state.selectAccount.expenses.forEach(expense => {
+        if (expense.name === expenseToDelete) {
+          indexOfItem = state.selectAccount.expenses.indexOf(expense);
+          if (indexOfItem > -1) {
+            state.selectAccount.expenses.splice(indexOfItem, 1);
+            state.selectAccount.balance =
+              state.selectAccount.balance + Number(expense.amount);
+          }
+        }
+      });
     },
     //Categories
     mutateIncomeList(state, category) {
@@ -184,6 +199,8 @@ export default new Vuex.Store({
         });
         if (!existingIncome) {
           state.selectAccount.incomes.push(newIncome);
+          state.selectAccount.balance =
+            state.selectAccount.balance + newIncome.amount;
         }
       }
     },
@@ -198,17 +215,23 @@ export default new Vuex.Store({
       state.accounts.forEach(account => {
         if (account.account === newTransferedIncome.userAccount) {
           account.incomes.push(newIncome);
+          var balance = Number(account.balance);
+          account.balance = balance + Number(newIncome.amount);
         }
       });
     },
     mutateUpdateIncome(state, updatedIncome) {
       var index;
+      var lastAmount;
       state.selectAccount.incomes.forEach(income => {
         if (income.name === updatedIncome.name) {
+          lastAmount = income.amount;
           index = state.selectAccount.incomes.indexOf(income);
           if (index > -1) {
             if (updatedIncome.category !== "" && updatedIncome.amount > 0) {
               state.selectAccount.incomes.splice(index, 1, updatedIncome);
+              state.selectAccount.balance =
+                state.selectAccount.balance - lastAmount + updatedIncome.amount;
             }
           }
         }
@@ -221,6 +244,8 @@ export default new Vuex.Store({
           index = state.selectAccount.incomes.indexOf(income);
           if (index > -1) {
             state.selectAccount.incomes.splice(index, 1);
+            state.selectAccount.balance =
+              state.selectAccount.balance - income.amount;
           }
         }
       });

@@ -1,11 +1,16 @@
 <template>
   <div id="expenses" class="main-container">
+    <div id="nav2">
+      <router-link to="/Categories">Categories </router-link> |
+      <router-link to="/Income">Incomes </router-link> |
+      <router-link to="/expenses">Expenses </router-link>
+    </div>
     <div>
+      <label class="animated" id="expensesTitle">EXPENSES</label>
       <br />
-      <br />
-      <label id="expensesTitle">Expenses</label>
-      <br />
-      <br />
+      <span id="balance" class="card"
+        ><b>Account Balance: </b>{{ account.balance }} Bs.</span
+      >
       <br />
       <br />
       <label>Expense's Name: </label>
@@ -18,7 +23,6 @@
           category.name
         }}</option>
       </select>
-      <br />
       <br />
       <div v-if="expenseCategory === 'Transaction'">
         <label>Account To Transfer: </label>
@@ -39,7 +43,7 @@
       <br />
       <br />
       <div v-if="expenseCategory === 'Transaction'">
-        <button id="SubmitTransfer" @click="addNewTransfer" class="buttons">
+        <button @click="addNewTransfer" class="buttons">
           Add new Transfer
         </button>
       </div>
@@ -95,6 +99,7 @@ export default {
   computed: {
     ...mapGetters(["getCategoryList"]),
     ...mapGetters(["getAccounts"]),
+    ...mapGetters(["getAccount"]),
     ...mapGetters(["getExpenseList"]),
     expenseDate() {
       var date = new Date();
@@ -110,6 +115,9 @@ export default {
     },
     accounts() {
       return this.getAccounts;
+    },
+    account() {
+      return this.getAccount;
     }
   },
   methods: {
@@ -119,35 +127,59 @@ export default {
     ...mapActions(["deleteExpense"]),
     ...mapActions(["addIncomeTransfered"]),
     addNewTransfer() {
-      this.addExpense({
-        name: this.expenseName,
-        category: this.expenseCategory,
-        amount: this.expenseAmount,
-        date: this.expenseDate,
-        is: "expense"
-      });
-      this.addIncomeTransfered({
-        userAccount: this.transferUser,
-        name: this.expenseName,
-        category: this.expenseCategory,
-        amount: this.expenseAmount,
-        date: this.expenseDate,
-        is: "income"
-      });
-      this.clearBoxes();
+      if (this.nameNotExists()) {
+        if (this.account.balance >= this.expenseAmount) {
+          this.addExpense({
+            name: this.expenseName,
+            category: this.expenseCategory,
+            amount: Number(this.expenseAmount),
+            date: this.expenseDate,
+            is: "expense"
+          });
+          this.addIncomeTransfered({
+            userAccount: this.transferUser,
+            name: this.expenseName,
+            category: this.expenseCategory,
+            amount: Number(this.expenseAmount),
+            date: this.expenseDate,
+            is: "income"
+          });
+          this.clearBoxes();
+        } else {
+          alert(
+            "Balance:" +
+              this.account.balance +
+              " Bs.\nYou don't have enough  money."
+          );
+        }
+      } else {
+        alert("Error Ocurred, Expense name already exists");
+      }
     },
     addNewExpense() {
-      if (this.validateFields()) {
-        this.addExpense({
-          name: this.expenseName,
-          category: this.expenseCategory,
-          amount: this.expenseAmount,
-          date: this.expenseDate,
-          is: "expense"
-        });
-        this.clearBoxes();
+      if (this.nameNotExists()) {
+        if (this.validateFields()) {
+          if (this.account.balance >= this.expenseAmount) {
+            this.addExpense({
+              name: this.expenseName,
+              category: this.expenseCategory,
+              amount: Number(this.expenseAmount),
+              date: this.expenseDate,
+              is: "expense"
+            });
+            this.clearBoxes();
+          } else {
+            alert(
+              "Balance:" +
+                this.account.balance +
+                " Bs.\nYou don't have enough  money."
+            );
+          }
+        } else {
+          alert("Error Ocurred, Verify input fields");
+        }
       } else {
-        alert("Error Ocurred, Verify input fields");
+        alert("Error Ocurred, Name Already Exists");
       }
     },
     modifyExpense() {
@@ -155,7 +187,7 @@ export default {
         this.updateExpense({
           name: this.expenseName,
           category: this.expenseCategory,
-          amount: this.expenseAmount,
+          amount: Number(this.expenseAmount),
           date: this.expenseDate,
           is: "expense"
         });
@@ -174,40 +206,44 @@ export default {
       this.expenseAmount = 0;
     },
     validateFields() {
-      if (
-        this.isEmptyString(this.expenseName) ||
-        this.isEmptyString(this.expenseCategory) ||
-        Number.isFinite(this.expenseAmount)
-      ) {
+      var name = this.expenseName;
+      var category = this.expenseCategory;
+      var amount = this.expenseAmount;
+      if (name === "" || name === null || category === "" || amount <= 0) {
         return false;
       } else {
         return true;
       }
     },
-    isEmptyString(string) {
-      if (string === "") {
-        return true;
-      } else {
+    nameNotExists() {
+      let exists = false;
+      this.expenseList.forEach(expense => {
+        if (expense.name === this.expenseName) {
+          this.expenseName = "";
+          exists = true;
+        }
+      });
+      if (exists) {
         return false;
+      } else {
+        return true;
       }
     }
   }
 };
 </script>
 <style>
+#balance {
+  font-size: 25px;
+}
 .showndate {
   color: white;
   font-size: 30px;
 }
-html {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
 .main-container {
-  background: black;
   width: 100%;
   height: 1500px;
   font-size: medium;
+  font-style: bold;
 }
 </style>

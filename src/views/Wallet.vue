@@ -1,8 +1,18 @@
 <template>
   <div id="WalletView" class="container">
-    <h1>Welcome to your WALLET --- {{ obj.account }}</h1>
+    <div id="nav2">
+      <router-link to="/Categories">Categories </router-link> |
+      <router-link to="/Income">Incomes </router-link> |
+      <router-link to="/expenses">Expenses </router-link>
+    </div>
+    <h1 class="animated">ACCOUNT: {{ obj.account }}</h1>
+    <br />
+    <span class="card"><b>Balance: </b>{{ obj.balance }} Bs.</span>
     <br />
     <br />
+    <br />
+    <br />
+    <label>New account's name: </label>
     <input v-model="account" placeholder="" />
     <br />
     <br />
@@ -10,7 +20,7 @@
     <button @click="viewdeleteAccount()">Delete Account</button>
     <br />
     <br />
-    <label>Choose a Category:</label>
+    <label>Choose a Category: </label>
     <input v-model="categorylooked" placeholder="Category" />
     <label>Report:</label>
     <input v-model="reportlooked" placeholder="incomes/expenses/all" />
@@ -43,32 +53,16 @@
     </div>
     <br />
     <br />
-    <table id="table" border="1">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Category</th>
-          <th>Amount</th>
-          <th>Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr :key="item.code" v-for="item in filteredList">
-          <td :class="[item.is === 'income' ? 'green' : 'red']">
-            {{ item.name }}
-          </td>
-          <td :class="[item.is === 'income' ? 'green' : 'red']">
-            {{ item.category }}
-          </td>
-          <td :class="[item.is === 'income' ? 'green' : 'red']">
-            {{ item.amount }}
-          </td>
-          <td :class="[item.is === 'income' ? 'green' : 'red']">
-            {{ item.date }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <br />
+    <div class="cardView" :key="item.code" v-for="item in filteredList">
+      <div :class="[item.is === 'income' ? 'green' : 'red']">
+        <span
+          ><b>Name: </b>{{ item.name }} <b> Category: </b>{{ item.category }}
+          <b> Amount: </b>{{ item.amount }} Bs. <b> Date: </b
+          >{{ item.date }}</span
+        >
+      </div>
+    </div>
   </div>
 </template>
 
@@ -155,51 +149,44 @@ export default {
 };
 </script>
 <style scoped>
+.cardView {
+  /* Add shadows to create the "card" effect */
+  box-shadow: 0 10px 20px 0 rgba(253, 250, 250, 0.493);
+  transition: 0.3s;
+  background-color: #ffff;
+  color: rgba(0, 0, 0, 0.726);
+  margin-left: 30%;
+  margin-right: 30%;
+  width: auto;
+  height: 20px;
+  border-radius: 20px;
+  font-size: 22px;
+  text-align: center;
+  line-height: 20px;
+  margin-top: 30px;
+  font-family: "Arial";
+}
 .red {
   background: rgb(248, 117, 100);
+  padding: 10px;
+  border-radius: 20px;
+  width: auto;
+  height: 20px;
 }
 .green {
-  background: rgb(51, 228, 89);
+  background: rgb(49, 214, 85);
+  padding: 10px;
+  border-radius: 20px;
+  width: auto;
+  height: 20px;
 }
-table {
-  border: 2px solid #194e70;
-  border-radius: 3px;
-  background-color: rgb(224, 212, 212);
-  margin-left: 300px;
+.balance {
+  color: #fff;
+  font-size: 30px;
+  font-style: bold;
 }
-
-th {
-  background-color: #195770;
-  color: rgba(255, 255, 255, 0.66);
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-td {
-  background-color: #f9f9f9;
-  color: #000;
-}
-
-th,
-td {
-  min-width: 120px;
-  padding: 10px 20px;
-}
-th.active {
-  color: #000;
-}
-th.active .arrow {
-  opacity: 1;
-}
-.arrow {
-  display: inline-block;
-  vertical-align: middle;
-  width: 0;
-  height: 0;
-  margin-left: 5px;
-  opacity: 0.66;
+/* On mouse-over, add a deeper shadow */
+.cardView:hover {
+  box-shadow: 0 8px 16px 0 rgba(193, 207, 170, 0.2);
 }
 </style>

@@ -13,15 +13,18 @@ import Vuex from "vuex";
 //CATEGORIES UNIT TEST
 describe("Income Category List ", () => {
   let localVue;
+  let router;
 
   beforeEach(() => {
     localVue = createLocalVue();
     localVue.use(VueRouter);
+    router = new VueRouter({ routes: [] });
     localVue.use(Vuex);
   });
   it("Income Lists Work Propperly", () => {
     const wrapper = mount(Categories, {
       store,
+      router,
       localVue
     });
     let expectedInitialLength = 2;
@@ -40,6 +43,7 @@ describe("Income Category List ", () => {
   it("Income Interface Exists", () => {
     const wrapper = shallowMount(Categories, {
       store,
+      router,
       localVue
     });
     let DivName = "IncomeInterface";
@@ -49,6 +53,7 @@ describe("Income Category List ", () => {
   it("Income Button Exists", () => {
     const wrapper = shallowMount(Categories, {
       store,
+      router,
       localVue
     });
     let buttonName = "SubmitIncomeCategory";
@@ -58,15 +63,18 @@ describe("Income Category List ", () => {
 
 describe("Expense Category List ", () => {
   let localVue;
+  let router;
 
   beforeEach(() => {
     localVue = createLocalVue();
     localVue.use(VueRouter);
+    router = new VueRouter({ routes: [] });
     localVue.use(Vuex);
   });
   it("Expense Lists Work Propperly", () => {
     const wrapper = mount(Categories, {
       store,
+      router,
       localVue
     });
     let expectedInitialLength = 2;
@@ -86,6 +94,7 @@ describe("Expense Category List ", () => {
   it("Expense Interface Exists", () => {
     const wrapper = shallowMount(Categories, {
       store,
+      router,
       localVue
     });
     let DivName = "ExpenseInterface";
@@ -95,6 +104,7 @@ describe("Expense Category List ", () => {
   it("Expense Button Exists", () => {
     const wrapper = shallowMount(Categories, {
       store,
+      router,
       localVue
     });
     let buttonName = "SubmitExpenseCategory";
@@ -104,15 +114,17 @@ describe("Expense Category List ", () => {
 //WALLET UNIT TEST
 describe("Wallet Unit Test ", () => {
   let localVue;
-
+  let router;
   beforeEach(() => {
     localVue = createLocalVue();
     localVue.use(VueRouter);
+    router = new VueRouter({ routes: [] });
     localVue.use(Vuex);
   });
   it("Wallet View Exists", () => {
     const wrapper = shallowMount(Wallet, {
       store,
+      router,
       localVue
     });
     let DivName = "WalletView";
@@ -121,6 +133,7 @@ describe("Wallet Unit Test ", () => {
   it("Delete Account Works", () => {
     const wrapper = shallowMount(Wallet, {
       store,
+      router,
       localVue
     });
     wrapper.vm.deleteAccount("root");
@@ -134,16 +147,21 @@ describe("Wallet Unit Test ", () => {
 //REGISTER UNIT TEST
 describe("Register Unit Test ", () => {
   let localVue;
-
+  let router;
   beforeEach(() => {
     localVue = createLocalVue();
     localVue.use(VueRouter);
+    router = new VueRouter({ routes: [] });
     localVue.use(Vuex);
   });
   // ->
   it("Add new Account Works", () => {
+    global.alert = message => {
+      console.log(message);
+    };
     const wrapper = shallowMount(Register, {
       store,
+      router,
       localVue
     });
     wrapper.vm.addAccount({ name: "added" });
@@ -157,20 +175,73 @@ describe("Register Unit Test ", () => {
 //EXPENSES UNIT TEST
 describe("Expenses Logic Tests", () => {
   let localVue;
+  let router;
   beforeEach(() => {
     localVue = createLocalVue();
     localVue.use(VueRouter);
+    router = new VueRouter({ routes: [] });
     localVue.use(Vuex);
   });
-  it("Testing Expense Create", () => {
+  it("Testing Expense Field Validation", async () => {
+    global.alert = message => {
+      console.log(message);
+    };
     const wrapper = mount(Expenses, {
       store,
+      router,
       localVue
     });
-    //wrapper.vm.chooseAccount("root");
+    await wrapper.vm.$store.dispatch("chooseAccount", {
+      account: "root",
+      type: "debit",
+      incomes: [
+        {
+          name: "prueba1",
+          category: "other",
+          amount: "15548",
+          date: "12/1/2020",
+          is: "income"
+        }
+      ],
+      expenses: [
+        {
+          name: "prueba3",
+          category: "other",
+          amount: "15548",
+          date: "12/5/2020",
+          is: "expense"
+        }
+      ]
+    });
+    const expectedLength =
+      wrapper.vm.$store.state.selectAccount.expenses.length;
+    wrapper.vm.$data.expenseName = "";
+    wrapper.vm.$data.expenseCategory = "";
+    wrapper.vm.$data.expenseAmount = 200;
+    wrapper.vm.$data.date = "15/06/2020";
+    wrapper.vm.addNewExpense();
+    assert.equal(
+      wrapper.vm.$store.state.selectAccount.expenses.length,
+      expectedLength
+    );
+  });
+  it("Testing Expense Create", () => {
+    global.alert = message => {
+      console.log(message);
+    };
+    const wrapper = mount(Expenses, {
+      store,
+      router,
+      localVue
+    });
     const initiallength = wrapper.vm.$store.state.selectAccount.expenses.length;
     const expectedlength = initiallength + 1;
-    wrapper.vm.addExpense("pruebaa");
+    wrapper.vm.addExpense({
+      name: "Expense",
+      category: "Transaction",
+      amount: 0,
+      date: "14/06/2020"
+    });
     assert.equal(
       wrapper.vm.$store.state.selectAccount.expenses.length,
       expectedlength
@@ -179,11 +250,18 @@ describe("Expenses Logic Tests", () => {
   it("Testing Expense Delete", () => {
     const wrapper = mount(Expenses, {
       store,
+      router,
       localVue
+    });
+    wrapper.vm.addExpense({
+      name: "Expense",
+      category: "Transaction",
+      amount: 0,
+      date: "14/06/2020"
     });
     const initiallength = wrapper.vm.$store.state.selectAccount.expenses.length;
     const expectedlength = initiallength - 1;
-    wrapper.vm.deleteExpense("prueba4");
+    wrapper.vm.deleteExpense("Expense");
     assert.equal(
       wrapper.vm.$store.state.selectAccount.expenses.length,
       expectedlength
@@ -192,39 +270,38 @@ describe("Expenses Logic Tests", () => {
 });
 describe("Expenses UI Tests", () => {
   let localVue;
-
+  let router;
+  beforeEach(() => {
+    localVue = createLocalVue();
+    localVue.use(VueRouter);
+    router = new VueRouter({ routes: [] });
+    localVue.use(Vuex);
+  });
   it("The title should be rendered", () => {
-    const expectedTitle = "Expenses";
+    const expectedTitle = "EXPENSES";
     const wrapper = shallowMount(Expenses, {
       store,
+      router,
       localVue
     });
     const titleInComponent = wrapper.find("#expensesTitle");
     assert.equal(titleInComponent.text(), expectedTitle);
   });
-
-  it("2 initial buttons should be rendered ", () => {
-    const expectedNumberofButtons = 2;
-    const wrapper = shallowMount(Expenses, {
-      store,
-      localVue
-    });
-    const buttonsInUI = wrapper.findAll(".buttons");
-    assert.isTrue(wrapper.exists());
-    assert.equal(buttonsInUI.length, expectedNumberofButtons);
-  });
 });
 //INCOMES UNIT TEST
 describe("Incomes interface", () => {
   let localVue;
+  let router;
   beforeEach(() => {
     localVue = createLocalVue();
     localVue.use(VueRouter);
+    router = new VueRouter({ routes: [] });
     localVue.use(Vuex);
   });
   it("Interface exists", () => {
     const wrapper = mount(Income, {
       store,
+      router,
       localVue
     });
     let divName = "income";
@@ -233,14 +310,17 @@ describe("Incomes interface", () => {
 });
 describe("CRUD methods in Income View", () => {
   let localVue;
+  let router;
   beforeEach(() => {
     localVue = createLocalVue();
     localVue.use(VueRouter);
+    router = new VueRouter({ routes: [] });
     localVue.use(Vuex);
   });
   it("Validation in fields works proppertly", () => {
     const wrapper = mount(Income, {
       store,
+      router,
       localVue
     });
     const expectedLength = wrapper.vm.$store.state.selectAccount.incomes.length;
@@ -281,6 +361,7 @@ describe("CRUD methods in Income View", () => {
   it("Adding new Income works correctly", () => {
     const wrapper = mount(Income, {
       store,
+      router,
       localVue
     });
     const initialLength = wrapper.vm.$store.state.selectAccount.incomes.length;
@@ -306,6 +387,7 @@ describe("CRUD methods in Income View", () => {
   it("Don't add a new Income if its name already exists.", () => {
     const wrapper = mount(Income, {
       store,
+      router,
       localVue
     });
     const expectedLength = wrapper.vm.$store.state.selectAccount.incomes.length;
@@ -324,6 +406,7 @@ describe("CRUD methods in Income View", () => {
   it("Delete an Income works correctly", () => {
     const wrapper = mount(Income, {
       store,
+      router,
       localVue
     });
     const initialLength = wrapper.vm.$store.state.selectAccount.incomes.length;
@@ -339,15 +422,17 @@ describe("CRUD methods in Income View", () => {
 
 describe("Transfer Unit Testing", () => {
   let localVue;
+  let router;
   beforeEach(() => {
     localVue = createLocalVue();
     localVue.use(VueRouter);
+    router = new VueRouter({ routes: [] });
     localVue.use(Vuex);
   });
-  
   it("Transfer Button does exist", () => {
     const wrapper = shallowMount(Categories, {
       store,
+      router,
       localVue
     });
     let buttonName = "SubmitTransfer";
@@ -357,9 +442,11 @@ describe("Transfer Unit Testing", () => {
   it("Adding new Transfer works correctly", () => {
     const wrapper = mount(Expenses, {
       store,
+      router,
       localVue
     });
-    const initialIncomesLength = wrapper.vm.$store.state.selectAccount.incomes.length;
+    const initialIncomesLength =
+      wrapper.vm.$store.state.selectAccount.incomes.length;
     const expectedIncomesLength = initialIncomesLength + 1;
     //If all fields are valid
     wrapper.vm.addIncome({
@@ -373,19 +460,8 @@ describe("Transfer Unit Testing", () => {
       wrapper.vm.$store.state.selectAccount.incomes.length,
       expectedIncomesLength
     );
-    /*wrapper.vm.addIncomeTransfered({
-      userAccount: "root",
-      name: "NewTransferedIncome",
-      category: "Other",
-      amount: 1000,
-      date: "14/06/2020"
-    });
-    console.log("actual expenses length " + initialLength);
-    assert.equal(
-      wrapper.vm.$store.state.selectAccount.incomes.length,
-      expectedLength
-    );*/
-    const initialExpensesLength = wrapper.vm.$store.state.selectAccount.expenses.length;
+    const initialExpensesLength =
+      wrapper.vm.$store.state.selectAccount.expenses.length;
     const expectedExpensesLength = initialExpensesLength + 1;
     wrapper.vm.addExpense({
       name: "NewTransferedExpense",
@@ -398,7 +474,5 @@ describe("Transfer Unit Testing", () => {
       wrapper.vm.$store.state.selectAccount.expenses.length,
       expectedExpensesLength
     );
-    
   });
 });
-
