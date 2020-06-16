@@ -104,7 +104,6 @@ export default {
       return incomesExpesesList;
     },
     filteredList() {
-      console.log(this.categorylooked + "---" + this.datelooked);
       var listByCategory;
       if (this.reportlooked === "incomes") {
         listByCategory =
@@ -136,7 +135,9 @@ export default {
   methods: {
     ...mapActions(["deleteAccount", "updateAccout"]),
     viewdeleteAccount() {
-      this.obj.incomes.length === 0 && this.obj.expenses.length === 0
+      this.obj.incomes.length === 0 &&
+      this.obj.expenses.length === 0 &&
+      this.obj.account !== ""
         ? this.deleteAccount(this.account)
         : alert("Delete option disable");
     },

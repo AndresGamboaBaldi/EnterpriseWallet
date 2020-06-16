@@ -102,6 +102,7 @@ export default new Vuex.Store({
     //Accounts
     mutateAccounts(state, newAccount) {
       state.accounts.push(newAccount);
+      alert("Created Account :" + newAccount.account);
     },
     mutateSelectAccount(state, newSeletedAccount) {
       state.selectAccount.account = newSeletedAccount.account;
@@ -110,8 +111,14 @@ export default new Vuex.Store({
       state.selectAccount.incomes = newSeletedAccount.incomes;
       state.selectAccount.expenses = newSeletedAccount.expenses;
     },
-    mutateUpdateAccount(state, newNameAccount) {
-      state.selectAccount.account = newNameAccount;
+    mutateUpdateAccount(state, newAccount) {
+      state.accounts.forEach(updateAccount => {
+        if (updateAccount.account === state.selectAccount.account) {
+          updateAccount.account = newAccount;
+        }
+      });
+      state.selectAccount.account = newAccount;
+      alert("Updated name Account to:" + newAccount);
     },
     mutateDeleteAccount(state, nameAccount) {
       var indexOfItem;
@@ -120,6 +127,7 @@ export default new Vuex.Store({
       if (this.item !== null) {
         state.accounts.splice(indexOfItem, 1);
       }
+      alert("Deleted Account" + nameAccount);
     },
     //Expense
     mutateAddExpense(state, newExpense) {
