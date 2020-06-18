@@ -19,14 +19,13 @@ describe("Transfer Unit Testing", () => {
     router = new VueRouter({ routes: [] });
     localVue.use(Vuex);
   });
-  it("Transfer Button does exist", () => {
+  it("Update Transfer Button does exist", () => {
     const wrapper = shallowMount(Expenses, {
       store,
       router,
       localVue
     });
-    let buttonName = "SubmitTransfer";
-    assert.exists(wrapper.find(buttonName));
+    assert.equal(wrapper.find("#SubmitTransfer").exists(), true);
   });
   it("Adding new Transfer works correctly", async () => {
     global.alert = message => {
@@ -108,8 +107,7 @@ describe("Income Category List ", () => {
       router,
       localVue
     });
-    let DivName = "IncomeInterface";
-    assert.exists(wrapper.find(DivName));
+    assert.equal(wrapper.find("#IncomeInterface").exists(), true);
   });
 
   it("Income Button Exists", () => {
@@ -118,8 +116,7 @@ describe("Income Category List ", () => {
       router,
       localVue
     });
-    let buttonName = "SubmitIncomeCategory";
-    assert.exists(wrapper.find(buttonName));
+    assert.equal(wrapper.find("#SubmitIncomeCategory").exists(), true);
   });
 });
 
@@ -159,8 +156,7 @@ describe("Expense Category List ", () => {
       router,
       localVue
     });
-    let DivName = "ExpenseInterface";
-    assert.exists(wrapper.find(DivName));
+    assert.equal(wrapper.find("#ExpenseInterface").exists(), true);
   });
 
   it("Expense Button Exists", () => {
@@ -169,8 +165,7 @@ describe("Expense Category List ", () => {
       router,
       localVue
     });
-    let buttonName = "SubmitExpenseCategory";
-    assert.exists(wrapper.find(buttonName));
+    assert.equal(wrapper.find("#SubmitExpenseCategory").exists(), true);
   });
 });
 //WALLET UNIT TEST
@@ -189,8 +184,7 @@ describe("Wallet Unit Test ", () => {
       router,
       localVue
     });
-    let DivName = "WalletView";
-    assert.exists(wrapper.find(DivName));
+    assert.equal(wrapper.find("#WalletView").exists(), true);
   });
   it("Delete Account Works", () => {
     global.alert = message => {
@@ -369,8 +363,7 @@ describe("Incomes interface", () => {
       router,
       localVue
     });
-    let divName = "income";
-    assert.exists(wrapper.find(divName));
+    assert.equal(wrapper.find("#income").exists(), true);
   });
 });
 describe("CRUD methods in Income View", () => {

@@ -199,6 +199,14 @@ export default {
   color: #f9f9f9;
   font-size: 25px;
 }
+.incomeTable{
+  font: "Oswald", sans-serif;
+  border: 2px solid #bea42f;
+  border-radius: 3px;
+  background-color: rgb(224, 212, 212);
+  margin-left: auto;
+  margin-right: auto;
+}
 .animated {
   font: 700 4em/1 "Oswald", sans-serif;
   letter-spacing: 0;
