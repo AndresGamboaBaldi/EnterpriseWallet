@@ -27,8 +27,8 @@
       <div v-if="expenseCategory === 'Transaction'">
         <label>Account To Transfer: </label>
         <select v-model="transferUser" placeholder="Account to transfer">
-          <option :key="index" v-for="(account, index) in accounts">
-            {{ account.account }}
+          <option :key="index" v-for="(cuenta, index) in filteredAccountList">
+            {{ cuenta.account }}
           </option>
         </select>
       </div>
@@ -51,7 +51,7 @@
         <button @click="addNewExpense" class="buttons">Add new Expense</button>
       </div>
       <br />
-      <button @click="modifyExpense" class="buttons">
+      <button id="SubmitTransfer" @click="modifyExpense" class="buttons">
         Update Expense
       </button>
     </div>
@@ -118,6 +118,11 @@ export default {
     },
     account() {
       return this.getAccount;
+    },
+    filteredAccountList(){
+      return this.getAccounts.filter(
+        item => item.account !== this.account.account
+      );
     }
   },
   methods: {

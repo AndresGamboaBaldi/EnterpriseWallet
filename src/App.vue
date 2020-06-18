@@ -152,7 +152,7 @@ td {
 }
 th,
 td {
-  min-width: 120px;
+  min-width: auto;
   padding: 10px 20px;
 }
 th.active {
